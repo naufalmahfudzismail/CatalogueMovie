@@ -20,6 +20,8 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.ItemClickSupport;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
@@ -37,19 +39,28 @@ public class MainActivity extends AppCompatActivity
 		implements MaterialSearchBar.OnSearchActionListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener
 {
 
+	@BindView(R.id.rcy_movie)
+	RecyclerView recyclerView;
+
+	@BindView(R.id.movie_search)
+	MaterialSearchBar searchBar;
+
+	@BindView(R.id.refresh_layout)
+	SwipeRefreshLayout refreshLayout;
+
+	@BindView(R.id.title_movies)
+	TextView title;
+
+	@BindView(R.id.total_movies)
+	TextView size;
 
 	private static final String TAG = "MainActivity";
-
 	private static Retrofit retrofit = null;
-	private RecyclerView recyclerView = null;
-	private SwipeRefreshLayout refreshLayout;
-	private MaterialSearchBar searchBar;
-	private TextView title;
-	private TextView size;
-	private List <Movie> movies;
 
-	Call<MovieResponse> call;
-	MoviesAdapter moviesAdapter;
+	private List<Movie> movies;
+	private Call<MovieResponse> call;
+
+	private MoviesAdapter moviesAdapter;
 
 	private String judul_film = "";
 	private int currentPage = 1;
@@ -69,9 +80,9 @@ public class MainActivity extends AppCompatActivity
 
 	private void init_widget()
 	{
-		recyclerView = findViewById(R.id.rcy_movie);
-		recyclerView.setHasFixedSize(true);
+		ButterKnife.bind(this);
 
+		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 
 		ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener()
@@ -81,15 +92,11 @@ public class MainActivity extends AppCompatActivity
 			{
 
 				MoviesAdapter.setMovie(movies.get(position));
-				Intent intent = new Intent (MainActivity.this, DetailActivity.class);
+				Intent intent = new Intent(MainActivity.this, DetailActivity.class);
 				startActivity(intent);
 			}
 		});
 
-		searchBar = findViewById(R.id.movie_search);
-		refreshLayout = findViewById(R.id.refresh_layout);
-		title = findViewById(R.id.title_movies);
-		size = findViewById(R.id.total_movies);
 		searchBar.setOnSearchActionListener(this);
 		refreshLayout.setOnRefreshListener(this);
 	}
@@ -114,13 +121,11 @@ public class MainActivity extends AppCompatActivity
 			String top = "Top Rated Movies";
 			title.setText(top);
 			call = movieApiService.getTopRatedMovies(BuildConfig.API_KEY);
-		}
-		else
+		} else
 		{
 			call = movieApiService.getSearchMovie(BuildConfig.API_KEY, currentPage, judul_film);
 			title.setText("Result : " + judul_film);
 		}
-
 
 
 		call.enqueue(new Callback<MovieResponse>()
@@ -132,9 +137,9 @@ public class MainActivity extends AppCompatActivity
 				{
 					totalPages = response.body().getTotalPages();
 					movies = response.body().getResults();
-					size.setText("Total : "+movies.size());
+					size.setText("Total : " + movies.size());
 
-					moviesAdapter = new MoviesAdapter(movies, MainActivity.this );
+					moviesAdapter = new MoviesAdapter(movies, MainActivity.this);
 					recyclerView.setAdapter(moviesAdapter);
 
 					StopRefresh();

@@ -11,6 +11,10 @@ import com.google.gson.Gson;
 import java.text.NumberFormat;
 import java.util.List;
 
+import butterknife.BindInt;
+import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.DateTime;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
@@ -23,49 +27,64 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailActivity extends AppCompatActivity
 {
+	@BindView(R.id.tv_genres)
+	TextView detail_genre;
+
+	@BindView(R.id.movie_desc)
+	TextView detail_desc;
+
+	@BindView(R.id.tv_release_date)
+	TextView detail_date;
+
+	@BindView(R.id.tv_vote)
+	TextView detail_vote;
+
+	@BindView(R.id.title_movies)
+	TextView detail_title;
+
+	@BindView(R.id.img_poster)
+	ImageView detail_img_poster;
+
+	@BindView(R.id.img_poster_belongs)
+	ImageView detail_img_post_prod;
+
+	@BindViews({
+			R.id.img_star1,
+			R.id.img_star2,
+			R.id.img_star3,
+			R.id.img_star4,
+			R.id.img_star5
+	})
+	ImageView[] star_img = new ImageView[5];
+
+	@BindView(R.id.tv_title_belongs)
+	TextView prod_title;
+
+	@BindView(R.id.tv_budget)
+	TextView prod_budget;
+
+	@BindView(R.id.tv_revenue)
+	TextView prod_revenue;
+
+	@BindView(R.id.tv_companies)
+	TextView prod_companies;
+
+	@BindView(R.id.tv_countries)
+	TextView prod_countries;
+
 	private Movie movie;
 	private Call<DetailMovie> call;
 	private Retrofit retrofit;
-
-	private TextView detail_genre, detail_desc, detail_date, detail_vote, detail_title;
-	private ImageView detail_img_poster, detail_img_post_prod;
-	private ImageView[] star_img = new ImageView[5];
-	private TextView prod_title, prod_budget, prod_revenue, prod_companies, prod_countries;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
-		init_widget();
+		movie = MoviesAdapter.getMovie();
+		ButterKnife.bind(this);
 		GetDetailData();
 
-	}
-
-	private void init_widget()
-	{
-
-		movie = MoviesAdapter.getMovie();
-
-		detail_title = findViewById(R.id.title_movies);
-		detail_genre = findViewById(R.id.tv_genres);
-		detail_desc = findViewById(R.id.movie_desc);
-		detail_date = findViewById(R.id.tv_release_date);
-		detail_vote = findViewById(R.id.tv_vote);
-		prod_title = findViewById(R.id.tv_title_belongs);
-		prod_budget = findViewById(R.id.tv_budget);
-		prod_revenue = findViewById(R.id.tv_revenue);
-		prod_companies = findViewById(R.id.tv_companies);
-		prod_countries = findViewById(R.id.tv_countries);
-
-		detail_img_poster = findViewById(R.id.img_poster);
-		detail_img_post_prod = findViewById(R.id.img_poster_belongs);
-
-		star_img[0] = findViewById(R.id.img_star1);
-		star_img[1] = findViewById(R.id.img_star2);
-		star_img[2] = findViewById(R.id.img_star3);
-		star_img[3] = findViewById(R.id.img_star4);
-		star_img[4] = findViewById(R.id.img_star5);
 	}
 
 	@Override
@@ -84,7 +103,7 @@ public class DetailActivity extends AppCompatActivity
 		detail_title.setText(movie.getTitle());
 
 		Glide.with(DetailActivity.this)
-				.load(BuildConfig.BASE_URL_IMG  + "/w185" + movie.getPosterPath())
+				.load(BuildConfig.BASE_URL_IMG + "/w185" + movie.getPosterPath())
 				.into(detail_img_poster);
 
 		detail_date.setText(DateTime.getLongDate(movie.getReleaseDate()));
