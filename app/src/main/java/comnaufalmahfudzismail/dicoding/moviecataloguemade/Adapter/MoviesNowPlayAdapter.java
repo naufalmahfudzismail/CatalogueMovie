@@ -10,22 +10,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 
-import java.util.*;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 
-public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>
+public class MoviesNowPlayAdapter extends RecyclerView.Adapter<MoviesNowPlayAdapter.NowMovieViewHolder>
 {
 	private List<Movie> movies;
 	private Context context;
@@ -36,54 +36,64 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 		return movie;
 	}
 
-	public void replaceAll(List<Movie> items) {
+	public List<Movie> getMovies()
+	{
+		return movies;
+	}
+
+	public void setMovies(List<Movie> movies)
+	{
+		this.movies = movies;
+	}
+
+	public void replaceAll(List<Movie> items)
+	{
 		movies.clear();
 		movies = items;
+
 		notifyDataSetChanged();
 	}
 
-	public void updateData(List<Movie> items) {
+	public void updateData(List<Movie> items)
+	{
 		movies.addAll(items);
 		notifyDataSetChanged();
 	}
 
 	public static void setMovie(Movie movie)
 	{
-		MoviesAdapter.movie = movie;
+		MoviesNowPlayAdapter.movie = movie;
 	}
 
-	public MoviesAdapter(List<Movie> movies, Context context)
+	public MoviesNowPlayAdapter(List<Movie> movies, Context context)
 	{
 		this.movies = movies;
 		this.context = context;
 	}
 
 	//A view holder inner class where we get reference to the views in the layout using their ID
-	static class MovieViewHolder extends RecyclerView.ViewHolder
+	static class NowMovieViewHolder extends RecyclerView.ViewHolder
 	{
-		@BindView(R.id.movies_layout)
-		RelativeLayout moviesLayout;
-
-		@BindView(R.id.title)
-		TextView movieTitle;
-
-		@BindView(R.id.date)
-		TextView data;
-
-		@BindView(R.id.description)
-		TextView movieDescription;
-
-		@BindView(R.id.rating)
-		TextView rating;
-
-		@BindView(R.id.number_movie)
-		TextView number;
-
-		@BindView(R.id.movie_image)
+		@BindView(R.id.now_photo)
 		ImageView movieImage;
 
+		@BindView(R.id.now_title)
+		TextView movieTitle;
 
-		MovieViewHolder(View v)
+		@BindView(R.id.now_date)
+		TextView data;
+
+		@BindView(R.id.now_desc)
+		TextView movieDescription;
+
+		@BindView(R.id.now_detail)
+		Button detail;
+
+		@BindView(R.id.now_share)
+		Button share;
+
+
+		NowMovieViewHolder(View v)
 		{
 			super(v);
 			ButterKnife.bind(this, v);
@@ -92,30 +102,37 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
 
 	@NonNull
 	@Override
-	public MoviesAdapter.MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
-	                                                        int viewType)
+	public MoviesNowPlayAdapter.NowMovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+	                                                                 int viewType)
 	{
-		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_movie, parent, false);
-		return new MovieViewHolder(view);
+		View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_nowplay_movie, parent, false);
+		return new NowMovieViewHolder(view);
 	}
 
 	@SuppressLint("SetTextI18n")
 	@Override
-	public void onBindViewHolder(@NonNull MovieViewHolder holder, @SuppressLint("RecyclerView") final int position)
+	public void onBindViewHolder(@NonNull NowMovieViewHolder holder, @SuppressLint("RecyclerView") final int position)
 	{
-		String image_url = BuildConfig.BASE_URL_IMG+ "/w342//" + movies.get(position).getPosterPath();
+		String image_url = BuildConfig.BASE_URL_IMG + "/w342//" + movies.get(position).getPosterPath();
 		Glide.with(context)
 				.load(image_url)
 				.placeholder(android.R.drawable.sym_def_app_icon)
 				.error(android.R.drawable.sym_def_app_icon)
 				.into(holder.movieImage);
-
-		holder.number.setText(""+(movies.indexOf(movies.get(position))+1));
-
 		holder.movieTitle.setText(movies.get(position).getTitle());
 		holder.data.setText(movies.get(position).getReleaseDate());
 		holder.movieDescription.setText(movies.get(position).getOverview());
-		holder.rating.setText(movies.get(position).getVoteAverage().toString());
+
+		holder.detail.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent intent = new Intent(context, DetailActivity.class);
+				intent.putExtra(DetailActivity.MOVIE_ITEM, new Gson().toJson(movies.get(position)));
+				context.startActivity(intent);
+			}
+		});
 
 	}
 

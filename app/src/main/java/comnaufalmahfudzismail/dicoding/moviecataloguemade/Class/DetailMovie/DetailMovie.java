@@ -10,6 +10,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
+
 public class DetailMovie
 {
 

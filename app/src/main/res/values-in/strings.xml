@@ -1,0 +1,26 @@
+<resources  xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Katalog Film</string>
+    <string name="read_more">Baca Selengkapnya</string>
+    <string name="title">Judul</string>
+    <string name="tanggal_rilis">Tanggal rilis</string>
+    <string name="rating">Penilaian</string>
+    <string name="genre">Aliran</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="negara">Negara</string>
+    <string name="perusahaan">Perusahaan</string>
+    <string name="keuntungan">Pendapatan</string>
+    <string name="budget_awal">Anggaran</string>
+    <string name="pemilik">Koleksi</string>
+    <string name="hasil">Hasil :</string>
+    <string name="Top_rating">Film Peringkat Teratas</string>
+    <string name="gagal_koneksi">Gagal menampilkan data!, cek koneksi anda!</string>
+    <string name="tidak_diketahui">Tidak diketahui</string>
+    <string name="now_playingFragment">Sedang diputar</string>
+    <string name="upcomingFragment">Mendatang</string>
+    <string name="searchFragment">Cari Film</string>
+    <string name="judul_app">Katalog Film</string>
+    <string name="up_detail">Rincian</string>
+    <string name="up_share">Bagikan</string>
+    <string name="poster_movie">poster movie</string>
+    <string name="popular">Film Terpopuler</string>
+</resources>

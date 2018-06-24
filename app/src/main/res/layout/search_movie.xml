@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/movie_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp">
+
+            </com.mancj.materialsearchbar.MaterialSearchBar>
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:layout_below="@+id/movie_search"
+                android:id="@+id/title_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/title"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:textColor="@color/colorBlack"
+                android:id="@+id/total_movies"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/movie_search"
+                android:padding="10dp"
+                android:text="@string/title"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:layout_alignParentRight="true" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_below="@+id/title_movies"
+                android:id="@+id/rcy_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp">
+
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>

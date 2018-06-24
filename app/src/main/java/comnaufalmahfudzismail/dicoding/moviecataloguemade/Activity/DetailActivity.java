@@ -1,9 +1,12 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 
 import android.annotation.SuppressLint;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.*;
+
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
@@ -27,6 +30,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailActivity extends AppCompatActivity
 {
+	@BindView(R.id.tablyout_detail)
+	Toolbar toolbar;
+
 	@BindView(R.id.tv_genres)
 	TextView detail_genre;
 
@@ -75,15 +81,21 @@ public class DetailActivity extends AppCompatActivity
 	private Movie movie;
 	private Call<DetailMovie> call;
 	private Retrofit retrofit;
+	public static final String MOVIE_ITEM = "movie_item";
+	private Gson gson = new Gson();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detail);
-		movie = MoviesAdapter.getMovie();
+
 		ButterKnife.bind(this);
-		GetDetailData();
+		setSupportActionBar(toolbar);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+		String movie_item = getIntent().getStringExtra(MOVIE_ITEM);
+		GetDetailData(movie_item);
 
 	}
 
@@ -95,10 +107,11 @@ public class DetailActivity extends AppCompatActivity
 		if (call != null) call.cancel();
 	}
 
-	private void GetDetailData()
+	private void GetDetailData(String movie_item)
 	{
-		GetDetailDataFromServer(String.valueOf(movie.getId()));
+		movie = gson.fromJson(movie_item, Movie.class);
 		getSupportActionBar().setTitle(movie.getTitle());
+		GetDetailDataFromServer(String.valueOf(movie.getId()));
 
 		detail_title.setText(movie.getTitle());
 
@@ -169,9 +182,9 @@ public class DetailActivity extends AppCompatActivity
 				String budget;
 				String revenue;
 
-				if (d_movie.getBudget() <= 0) budget = "Unknown";
+				if (d_movie.getBudget() <= 0) budget = getString(R.string.tidak_diketahui);
 				else budget = "$ " + NumberFormat.getIntegerInstance().format(d_movie.getBudget());
-				if (d_movie.getRevenue() <= 0) revenue = "Unknown";
+				if (d_movie.getRevenue() <= 0) revenue = getString(R.string.tidak_diketahui);
 				else
 					revenue = "$ " + NumberFormat.getIntegerInstance().format(d_movie.getRevenue());
 

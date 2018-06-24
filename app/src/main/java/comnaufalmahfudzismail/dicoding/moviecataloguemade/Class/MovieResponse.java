@@ -20,6 +20,19 @@ public class MovieResponse
 	@SerializedName("total_pages")
 	private int totalPages;
 
+	@SerializedName("dates")
+	private Dates date;
+
+	public Dates getDate()
+	{
+		return date;
+	}
+
+	public void setDate(Dates date)
+	{
+		this.date = date;
+	}
+
 	public int getPage()
 	{
 		return page;

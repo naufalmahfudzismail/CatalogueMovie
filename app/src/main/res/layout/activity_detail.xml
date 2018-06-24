@@ -6,7 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activity.DetailActivity"
-    android:background="@drawable/background_gradient">
+    android:background="#18e7d3">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tablyout_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways">
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,6 +45,8 @@
                 tools:targetApi="lollipop" />
 
             <TextView
+                android:textStyle="bold"
+                android:textColor="#000000"
                 android:id="@+id/title_movies"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -52,22 +67,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tanggal_rilis"
+                    android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_release_date"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="#000000" />
 
                 <LinearLayout
-                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="16dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/rating"
+                        android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
@@ -76,6 +94,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
+                        android:textColor="#000000"
                         android:textStyle="bold" />
                 </LinearLayout>
 
@@ -86,9 +105,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/genre"
+                    android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <TextView
+                    android:textColor="#000000"
                     android:id="@+id/tv_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -96,13 +117,15 @@
                     android:layout_marginStart="16dp" />
 
                 <TextView
-                    android:layout_marginTop="16dp"
-                    android:textStyle="bold"
-                    android:text="@string/deskripsi"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/deskripsi"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:textColor="#000000"
                     android:id="@+id/movie_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -136,9 +159,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/pemilik"
+                        android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:textColor="#000000"
                         android:id="@+id/tv_title_belongs"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -150,9 +175,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/budget_awal"
+                        android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:textColor="#000000"
                         android:id="@+id/tv_budget"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -163,9 +190,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/keuntungan"
+                        android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:textColor="#000000"
                         android:id="@+id/tv_revenue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -176,9 +205,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/perusahaan"
+                        android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:textColor="#000000"
                         android:id="@+id/tv_companies"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -190,13 +221,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/negara"
+                        android:textColor="#000000"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_marginBottom="16dp"
+                        android:textColor="#000000"
                         android:id="@+id/tv_countries"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp" />
 

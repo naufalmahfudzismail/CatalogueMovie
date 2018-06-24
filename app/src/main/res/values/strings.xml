@@ -1,14 +1,26 @@
-<resources>
-    <string name="app_name">MovieCatalogue</string>
-    <string name="read_more">Read More</string>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">Catalogue Movies</string>
+    <string name="read_more">Read More..</string>
     <string name="title">Title</string>
-    <string name="tanggal_rilis">Tanggal rilis</string>
+    <string name="tanggal_rilis">Release Dates</string>
     <string name="rating">Rating</string>
-    <string name="genre">Genre</string>
-    <string name="deskripsi">Deskripsi</string>
-    <string name="negara">Negara</string>
-    <string name="perusahaan">Perusahaan</string>
-    <string name="keuntungan">Keuntungan</string>
-    <string name="budget_awal">Budget awal</string>
-    <string name="pemilik">Koleksi</string>
+    <string name="genre">Genres</string>
+    <string name="deskripsi">Description</string>
+    <string name="negara">Countrys</string>
+    <string name="perusahaan">Companys</string>
+    <string name="keuntungan">Revenue</string>
+    <string name="budget_awal">Budget</string>
+    <string name="pemilik">Collection</string>
+    <string name="hasil">Result :</string>
+    <string name="Top_rating">Top Rated Movies</string>
+    <string name="gagal_koneksi">Failed to load data!, Check your connection</string>
+    <string name="tidak_diketahui">Unknown</string>
+    <string name="now_playingFragment">Now Playing</string>
+    <string name="upcomingFragment">Upcoming</string>
+    <string name="searchFragment">Search Movies</string>
+    <string name="judul_app">Catalogue Movies</string>
+    <string name="up_detail">Detail</string>
+    <string name="up_share">Share</string>
+    <string name="poster_movie">Movie Poster</string>
+    <string name="popular">Most Popular Movies</string>
 </resources>
