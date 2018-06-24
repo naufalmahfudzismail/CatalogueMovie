@@ -110,10 +110,7 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 	@SuppressLint("SetTextI18n")
 	public void GetDataMovieAPI(final String judul_film)
 	{
-		String language;
-
-		if(MainActivity.isID) language = "id";
-		else language = "en_US";
+		String language = "en_US";
 
 
 		if (retrofit == null)

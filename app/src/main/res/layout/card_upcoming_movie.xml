@@ -10,13 +10,14 @@
         android:background="#fd31ffea"
         android:orientation="vertical"
         android:padding="8dp">
+
         <ImageView
-            android:padding="5dp"
             android:id="@+id/up_photo"
             android:layout_width="150dp"
             android:layout_height="220dp"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/poster_movie" />
+            android:contentDescription="@string/poster_movie"
+            android:padding="5dp"
+            android:scaleType="centerCrop" />
 
         <Button
 
@@ -26,71 +27,70 @@
             android:layout_height="40dp"
             android:layout_alignBottom="@+id/up_photo"
             android:layout_toEndOf="@+id/up_photo"
-            android:background="#6fa8dc"
+            android:layout_toRightOf="@+id/up_photo"
+            android:background="#5c938a"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/up_detail"
-            android:textColor="#00ff66"
-            android:textSize="12sp"
-            android:layout_toRightOf="@+id/up_photo" />
+            android:textColor="#00ffd9"
+            android:textSize="12sp" />
 
         <Button
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/up_detail"
             android:id="@+id/up_share"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_alignBottom="@+id/up_photo"
             android:layout_alignParentEnd="true"
-            android:background="#6fa8dc"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/up_detail"
+            android:layout_toRightOf="@+id/up_detail"
+            android:background="#5c938a"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/up_share"
-            android:textColor="#00ff66"
-            android:textSize="12sp"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/up_detail" />
+            android:textColor="#00ffd9"
+            android:textSize="12sp" />
 
         <TextView
-            android:textColor="#000000"
-            android:padding="5dp"
-            android:layout_toRightOf="@id/up_photo"
-            android:layout_toEndOf="@id/up_photo"
             android:id="@+id/up_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/up_photo"
+            android:layout_toRightOf="@id/up_photo"
             android:gravity="center"
+            android:padding="5dp"
             android:text="hhh"
+            android:textColor="#000000"
             android:textSize="16sp"
-            android:textStyle="bold"
-             />
+            android:textStyle="bold" />
 
         <TextView
-            android:textColor="#000000"
-            android:padding="5dp"
-            android:layout_height="80dp"
-            android:layout_below="@+id/up_title"
-            android:layout_toRightOf="@id/up_photo"
-            android:layout_toEndOf="@id/up_photo"
             android:id="@+id/up_desc"
             android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/up_title"
+            android:layout_toEndOf="@id/up_photo"
+            android:layout_toRightOf="@id/up_photo"
             android:gravity="center"
-            android:text="hhh" />
+            android:padding="5dp"
+            android:text="hhh"
+            android:textColor="#000000" />
 
         <TextView
-            android:textColor="#000000"
-            android:padding="5dp"
-            android:layout_below="@id/up_desc"
-            android:layout_toRightOf="@id/up_photo"
-            android:layout_toEndOf="@id/up_photo"
             android:id="@+id/up_date"
             android:layout_width="match_parent"
             android:layout_height="30dp"
+            android:layout_below="@id/up_desc"
+            android:layout_toEndOf="@id/up_photo"
+            android:layout_toRightOf="@id/up_photo"
             android:gravity="center"
-            android:text="hhh" />
+            android:padding="5dp"
+            android:text="hhh"
+            android:textColor="#000000" />
 
 
     </RelativeLayout>

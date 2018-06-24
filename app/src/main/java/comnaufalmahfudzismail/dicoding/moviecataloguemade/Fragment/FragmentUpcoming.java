@@ -77,10 +77,7 @@ public class FragmentUpcoming extends Fragment implements View.OnClickListener, 
 	public void GetDataMovieAPI()
 	{
 
-		String language;
-
-		if(MainActivity.isID) language = "id";
-		else language = "en_US";
+		String language = "en_US";
 
 		if (retrofit == null)
 		{

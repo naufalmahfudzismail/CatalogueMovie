@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity
 	@BindView(R.id.Main_toolbar)
 	Toolbar toolbar;
 
-	public static boolean isID = false;
+	//public static boolean isID = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity
 		viewPager.setAdapter(fragmentAdapter);
 		tab.setupWithViewPager(viewPager);
 
-		isID = Locale.getDefault().getLanguage().equals("in");
+		//isID = Locale.getDefault().getLanguage().equals("in");
 
 	}
 

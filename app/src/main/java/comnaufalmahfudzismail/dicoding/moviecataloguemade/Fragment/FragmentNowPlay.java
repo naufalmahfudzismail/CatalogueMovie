@@ -87,10 +87,7 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 	@SuppressLint("SetTextI18n")
 	public void GetDataMovieAPI()
 	{
-		String language;
-
-		if(MainActivity.isID) language = "id";
-		else language = "en_US";
+		String language = "en_US";
 
 
 		if (retrofit == null)
