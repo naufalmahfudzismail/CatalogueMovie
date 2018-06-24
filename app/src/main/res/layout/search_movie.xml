@@ -16,8 +16,10 @@
             <com.mancj.materialsearchbar.MaterialSearchBar
                 android:id="@+id/movie_search"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="5dp">
+                android:layout_height="60dp"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp">
 
             </com.mancj.materialsearchbar.MaterialSearchBar>
 
@@ -29,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="@string/title"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -41,7 +43,7 @@
                 android:layout_below="@+id/movie_search"
                 android:padding="10dp"
                 android:text="@string/title"
-                android:textSize="10sp"
+                android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_alignParentRight="true" />
 
