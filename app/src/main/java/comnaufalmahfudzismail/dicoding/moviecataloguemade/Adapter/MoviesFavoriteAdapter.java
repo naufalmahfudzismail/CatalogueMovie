@@ -85,6 +85,18 @@ public class MoviesFavoriteAdapter extends RecyclerView.Adapter<MoviesFavoriteAd
 				context.startActivity(intent);
 			}
 		});
+
+		holder.share.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_TITLE, movies.getTitle());
+				intent.putExtra(Intent.EXTRA_SUBJECT, movies.getTitle());
+				intent.putExtra(Intent.EXTRA_TEXT, movies.getTitle() + "\n\n" + movies.getOverview());
+				context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
+			}
+		});
 	}
 
 	@Override

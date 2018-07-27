@@ -134,6 +134,18 @@ public class MoviesNowPlayAdapter extends RecyclerView.Adapter<MoviesNowPlayAdap
 			}
 		});
 
+		holder.share.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_TITLE, movies.get(position).getTitle());
+				intent.putExtra(Intent.EXTRA_SUBJECT, movies.get(position).getTitle());
+				intent.putExtra(Intent.EXTRA_TEXT, movies.get(position).getTitle() + "\n\n" + movies.get(position).getOverview());
+				context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
+			}
+		});
+
 	}
 
 	@Override
