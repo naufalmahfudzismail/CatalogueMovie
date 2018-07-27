@@ -98,6 +98,9 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 			{
 
 				Intent intent = new Intent(getActivity(), DetailActivity.class);
+
+				Log.d(TAG, String.valueOf(movies.get(position).getId()));
+
 				intent.putExtra(DetailActivity.MOVIE_ITEM, new Gson().toJson(movies.get(position)));
 				startActivity(intent);
 			}

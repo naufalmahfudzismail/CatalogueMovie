@@ -10,6 +10,7 @@ import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 
@@ -96,6 +97,8 @@ public class DetailActivity extends AppCompatActivity
 	@BindView(R.id.progress_detail)
 	ProgressBar progressBar;
 
+	private static final String TAG = "DetailActivity";
+
 	private Movie movie;
 	private Call<DetailMovie> call;
 	private Retrofit retrofit;
@@ -132,6 +135,9 @@ public class DetailActivity extends AppCompatActivity
 	{
 		movie = gson.fromJson(movie_item, Movie.class);
 		loadDataSQLite(movie);
+
+		Log.d(TAG, String.valueOf(movie.getId()));
+
 		getSupportActionBar().setTitle(movie.getTitle());
 		GetDetailDataFromServer(String.valueOf(movie.getId()));
 
@@ -292,6 +298,8 @@ public class DetailActivity extends AppCompatActivity
 			cursor.close();
 		}
 		setFavoriteFabIcon();
+
+		favoriteHelper.close();
 	}
 
 	public void setFavoriteFabIcon()

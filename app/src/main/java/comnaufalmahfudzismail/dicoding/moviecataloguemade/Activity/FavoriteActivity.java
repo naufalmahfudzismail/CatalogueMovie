@@ -13,6 +13,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -40,6 +41,8 @@ public class FavoriteActivity extends AppCompatActivity
 	private Movie movie;
 	private MoviesFavoriteAdapter adapter;
 
+	private static final String TAG = "FavoriteActivity";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -51,6 +54,7 @@ public class FavoriteActivity extends AppCompatActivity
 		getSupportActionBar().setTitle(R.string.favorite);
 
 		set_rcy();
+
 		new loadDataAsync().execute();
 	}
 
@@ -60,12 +64,15 @@ public class FavoriteActivity extends AppCompatActivity
 		rcy_fav.setLayoutManager(new GridLayoutManager(this, 2));
 		rcy_fav.setAdapter(adapter);
 
+
+
 		ItemClickSupport.addTo(rcy_fav).setOnItemClickListener(new ItemClickSupport.OnItemClickListener()
 		{
 			@Override
 			public void onItemClicked(RecyclerView recyclerView, int position, View v)
 			{
 				movie = adapter.getMovie(position);
+				Log.d(TAG, String.valueOf(movie.getId()));
 				Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
 				intent.putExtra(DetailActivity.MOVIE_ITEM, new Gson().toJson(movie));
 				startActivity(intent);

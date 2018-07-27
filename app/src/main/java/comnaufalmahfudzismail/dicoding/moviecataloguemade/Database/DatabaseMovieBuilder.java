@@ -11,20 +11,19 @@ import static comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieC
 
 public class DatabaseMovieBuilder extends SQLiteOpenHelper
 {
-	private static final String DB_NAME = "Katalog_movies";
+	private static final String DB_NAME = "Catalogue_movies";
 	private static final int DB_VERSION = 1;
 
 	private static final String CREATE_MOVIE_TABLE = "CREATE TABLE "+ TABLE_MOVIES + " " +
 			"(" +
-			COLUMN_MOVIE_ID + "integer primary key autoincrement, "+
+			COLUMN_MOVIE_ID + " integer primary key autoincrement, "+
 			COLUMN_MOVIE_TITLE +" text not null, " +
 			COLUMN_MOVIE_BACKDROP_PATH +" text not null, " +
 			COLUMN_MOVIE_POSTER_PATH +" text not null, " +
 			COLUMN_MOVIE_RELEASE_DATE +" text not null, " +
 			COLUMN_MOVIE_VOTE_AVERAGE +" text not null, " +
 			COLUMN_MOVIE_OVERVIEW+" text not null, " +
-			COLUMN_MOVIE_VOTE_COUNT +" text not null, " +
-			COLUMN_MOVIE_POPULARITY + " text not null " +
+			COLUMN_MOVIE_VOTE_COUNT +" text not null " +
 			") ;";
 
 
