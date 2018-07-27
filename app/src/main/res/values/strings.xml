@@ -46,6 +46,7 @@
     <string name="fontBlackItalic" translatable="false">fonts/Gotham_MediumItalic.otf</string>
     <string name="fontExtraBold" translatable="false">fonts/GothamBlack.otf</string>
     <string name="fontThin" translatable="false">fonts/Gotham_Thin.otf</string>
+    <string name="change_language_settings">Change Language Settings</string>
 
     <!--FONT FINISH-->
 </resources>

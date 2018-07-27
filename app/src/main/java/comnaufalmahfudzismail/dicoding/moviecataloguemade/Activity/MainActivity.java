@@ -2,6 +2,7 @@ package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,6 +18,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -114,6 +117,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		getMenuInflater().inflate(R.menu.menu, menu);
+
+		int positionOfMenuItem = 0;
+
+		MenuItem item = menu.getItem(positionOfMenuItem);
+		SpannableString s = new SpannableString(getResources().getString(R.string.change_language_settings));
+		s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
+		item.setTitle(s);
+
 		return super.onCreateOptionsMenu(menu);
 	}
 
