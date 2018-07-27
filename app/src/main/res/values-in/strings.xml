@@ -23,4 +23,15 @@
     <string name="up_share">Bagikan</string>
     <string name="poster_movie">poster movie</string>
     <string name="popular">Film Terpopuler</string>
+    <string name="main_menu">Menu Utama</string>
+    <string name="favorite">Favorit</string>
+    <string name="share">Bagikan</string>
+    <string name="communicate">Komunikasi</string>
+    <string name="Page">Halaman</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">FlashMovie</string>
+    <string name="nav_header_subtitle">naufalmahfudzismail@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="toast_nav_home">Kamu sudah Berada di Beranda :v</string>
 </resources>

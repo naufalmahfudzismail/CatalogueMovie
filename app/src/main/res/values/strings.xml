@@ -23,4 +23,29 @@
     <string name="up_share">Share</string>
     <string name="poster_movie">Movie Poster</string>
     <string name="popular">Most Popular Movies</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="favorite">Favorite</string>
+    <string name="share">Share</string>
+    <string name="communicate">Communicate</string>
+    <string name="Page">Pages</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">FlashMovie</string>
+    <string name="nav_header_subtitle">naufalmahfudzismail@gmail.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="toast_nav_home">"You already at Home :v</string>
+    <string name="toast_add_fav">Favorited</string>
+    <string name="toast_remove_fav">Unfavorited</string>
+
+    <!--FONT START-->
+    <string name="fontReguler" translatable="false">fonts/Gotham_Light.otf</string>
+    <string name="fontRegulerItalic" translatable="false">fonts/Gotham_LightItalic.otf</string>
+    <string name="fontBold" translatable="false">fonts/Gotham_Book.otf</string>
+    <string name="fontBoldItalic" translatable="false">fonts/Gotham_BookItalic.otf</string>
+    <string name="fontBlack" translatable="false">fonts/Gotham_Medium.otf</string>
+    <string name="fontBlackItalic" translatable="false">fonts/Gotham_MediumItalic.otf</string>
+    <string name="fontExtraBold" translatable="false">fonts/GothamBlack.otf</string>
+    <string name="fontThin" translatable="false">fonts/Gotham_Thin.otf</string>
+
+    <!--FONT FINISH-->
 </resources>

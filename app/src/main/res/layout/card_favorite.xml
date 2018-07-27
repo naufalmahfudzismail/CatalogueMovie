@@ -13,30 +13,30 @@
         android:padding="8dp">
         <ImageView
             android:padding="5dp"
-            android:id="@+id/now_photo"
+            android:id="@+id/fav_photo"
             android:layout_width="150dp"
             android:layout_height="220dp"
             android:scaleType="centerCrop"
             android:contentDescription="@string/poster_movie" />
 
-        <Button
-            android:id="@+id/now_detail"
+        <fr.arnaudguyon.smartfontslib.FontButton
+            android:id="@+id/fav_detail"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/now_photo"
+            android:layout_toEndOf="@+id/fav_photo"
             android:background="#5c938a"
             android:textColor="#00ffd9"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/up_detail"
             android:textSize="12sp"
-            android:layout_toRightOf="@+id/now_photo" />
+            android:layout_toRightOf="@+id/fav_photo" />
 
-        <Button
+        <fr.arnaudguyon.smartfontslib.FontButton
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/now_detail"
-            android:id="@+id/now_share"
+            android:layout_toRightOf="@+id/fav_detail"
+            android:id="@+id/fav_share"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
@@ -48,15 +48,15 @@
             android:text="@string/up_share"
             android:textSize="12sp"
             android:layout_alignParentRight="true"
-            android:layout_toEndOf="@+id/now_detail"
+            android:layout_toEndOf="@+id/fav_detail"
             android:layout_marginStart="10dp" />
 
         <fr.arnaudguyon.smartfontslib.FontTextView
             android:textColor="#000000"
             android:padding="5dp"
-            android:layout_toRightOf="@id/now_photo"
-            android:layout_toEndOf="@id/now_photo"
-            android:id="@+id/now_title"
+            android:layout_toRightOf="@+id/fav_photo"
+            android:layout_toEndOf="@+id/fav_photo"
+            android:id="@+id/fav_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -64,15 +64,15 @@
             android:text="hhh"
             android:textSize="16sp"
             android:textStyle="bold"
-             />
+            />
 
         <fr.arnaudguyon.smartfontslib.FontTextView
             android:textColor="#000000"
             android:padding="5dp"
-            android:layout_below="@+id/now_title"
-            android:layout_toRightOf="@id/now_photo"
-            android:layout_toEndOf="@id/now_photo"
-            android:id="@+id/now_desc"
+            android:layout_below="@+id/fav_title"
+            android:layout_toRightOf="@+id/fav_photo"
+            android:layout_toEndOf="@+id/fav_photo"
+            android:id="@+id/fav_desc"
             android:layout_width="wrap_content"
             android:layout_height="80dp"
             android:gravity="center"
@@ -81,10 +81,10 @@
         <fr.arnaudguyon.smartfontslib.FontTextView
             android:textColor="#000000"
             android:padding="5dp"
-            android:layout_below="@id/now_desc"
-            android:layout_toRightOf="@id/now_photo"
-            android:layout_toEndOf="@id/now_photo"
-            android:id="@+id/now_date"
+            android:layout_below="@+id/fav_desc"
+            android:layout_toRightOf="@+id/fav_photo"
+            android:layout_toEndOf="@+id/fav_photo"
+            android:id="@+id/fav_date"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:gravity="center"

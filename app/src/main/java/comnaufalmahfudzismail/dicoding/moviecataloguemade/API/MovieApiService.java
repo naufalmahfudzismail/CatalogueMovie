@@ -14,11 +14,14 @@ public interface MovieApiService
 	@GET("movie/top_rated")
 	Call<MovieResponse> getTopRatedMovies(@Query("api_key") String apiKey);
 
+	@GET("search/movie")
+	Call<MovieResponse> getSearchMovie(@Query("api_key") String apiKey, @Query("page") int page, @Query("query") String query, @Query("language") String language);
+
 	@GET("movie/popular")
 	Call<MovieResponse> getPopularMovie(@Query("api_key") String apiKey, @Query("language") String language);
 
-	@GET("search/movie")
-	Call<MovieResponse> getSearchMovie(@Query("api_key") String apiKey, @Query("page") int page, @Query("query") String query, @Query("language") String language);
+	@GET("movie/latest?")
+	Call<DetailMovie> getLatestMovie(@Query("api_key") String apiKey);
 
 	@GET("movie/{movie_id}")
 	Call<DetailMovie> getDetailMovie(@Path("movie_id") String movie_id, @Query("api_key") String apiKey);

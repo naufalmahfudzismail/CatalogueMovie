@@ -23,7 +23,7 @@
 
             </com.mancj.materialsearchbar.MaterialSearchBar>
 
-            <TextView
+            <fr.arnaudguyon.smartfontslib.FontTextView
                 android:textColor="@color/colorBlack"
                 android:layout_below="@+id/movie_search"
                 android:id="@+id/title_movies"
@@ -34,7 +34,7 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <fr.arnaudguyon.smartfontslib.FontTextView
                 android:textColor="@color/colorBlack"
                 android:id="@+id/total_movies"
                 android:layout_width="wrap_content"
