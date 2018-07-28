@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	AdvanceDrawerLayout drawer;
 
 	private final static String TAG = "MainMenu";
-	private SpannableStringBuilder builder = new SpannableStringBuilder();
 
 	//public static boolean isID = false;
 
@@ -89,7 +88,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 		nav_view.setNavigationItemSelectedListener(this);
 		setSupportActionBar(toolbar);
+
+
 		getSupportActionBar().setTitle(R.string.judul_app);
+
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 		drawer.addDrawerListener(toggle);
