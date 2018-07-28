@@ -35,4 +35,5 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="toast_nav_home">Kamu sudah Berada di Beranda :v</string>
     <string name="change_language_settings">Ganti Bahasa</string>
+    <string name="share_description">Gunakan Aplikasi FlashMovie untuk mencari infromasi segalanya tentang dunia perfilman!</string>
 </resources>

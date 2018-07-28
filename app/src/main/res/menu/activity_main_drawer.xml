@@ -18,16 +18,17 @@
                     android:title="@string/favorite" />
             </group>
 
-        </menu>
-    </item>
 
-    <item android:title="@string/communicate"
-        android:icon="@color/hitam">
-        <menu>
+            <item
+                android:id="@+id/action_change_settings"
+                android:icon="@drawable/ic_lang"
+                android:title="@string/change_language_settings">
+            </item>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
                 android:title="@string/share" />
+
         </menu>
     </item>
 

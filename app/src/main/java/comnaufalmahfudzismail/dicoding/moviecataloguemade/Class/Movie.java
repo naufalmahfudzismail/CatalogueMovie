@@ -51,23 +51,12 @@ public class Movie implements Parcelable
 	@SerializedName("vote_count")
 	private Integer voteCount;
 
-	public Integer getDb_id()
-	{
-		return db_id;
-	}
-
-	public void setDb_id(Integer db_id)
-	{
-		this.db_id = db_id;
-	}
-
 	@SerializedName("video")
 	private Boolean video;
 
 	@SerializedName("vote_average")
 	private Double voteAverage;
 
-	private Integer db_id;
 
 	public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
 	             String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
@@ -87,7 +76,6 @@ public class Movie implements Parcelable
 		this.voteCount = voteCount;
 		this.video = video;
 		this.voteAverage = voteAverage;
-		this.db_id = id;
 	}
 
 	public Movie (Cursor cursor)

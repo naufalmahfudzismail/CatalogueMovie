@@ -19,6 +19,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Gravity;
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	AdvanceDrawerLayout drawer;
 
 	private final static String TAG = "MainMenu";
+	private SpannableStringBuilder builder = new SpannableStringBuilder();
 
 	//public static boolean isID = false;
 
@@ -88,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		nav_view.setNavigationItemSelectedListener(this);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setTitle(R.string.judul_app);
-
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 		drawer.addDrawerListener(toggle);
@@ -117,29 +118,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		getMenuInflater().inflate(R.menu.menu, menu);
-
-		int positionOfMenuItem = 0;
-
-		MenuItem item = menu.getItem(positionOfMenuItem);
-		SpannableString s = new SpannableString(getResources().getString(R.string.change_language_settings));
-		s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
-		item.setTitle(s);
-
 		return super.onCreateOptionsMenu(menu);
 	}
 
-
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item)
-	{
-		if (item.getItemId() == R.id.action_change_settings)
-		{
-			Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-			startActivity(mIntent);
-		}
-		return super.onOptionsItemSelected(item);
-	}
 
 	@Override
 	public void onBackPressed()
@@ -166,6 +147,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		{
 			Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_nav_home), Toast.LENGTH_SHORT).show();
 
+		}
+
+		if(id == R.id.action_change_settings)
+		{
+			Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+			startActivity(mIntent);
+		}
+
+		if(id == R.id.nav_share)
+		{
+			Intent intent = new Intent(Intent.ACTION_SEND);
+			intent.setType("text/plain");
+			intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.app_name));
+			intent.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.app_name));
+			intent.putExtra(Intent.EXTRA_TEXT, getResources().getString(R.string.app_name) + "\n\n" + getString(R.string.share_description));
+			startActivity(Intent.createChooser(intent, getResources().getString(R.string.share)));
 		}
 
 		drawer.closeDrawer(GravityCompat.START);

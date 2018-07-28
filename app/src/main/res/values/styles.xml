@@ -12,9 +12,9 @@
     </style>
 
     <style name="ToolbarTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:textColorPrimary">@color/hitam</item>
+        <item name="android:textColorPrimary">@color/putih</item>
         <item name="android:textColorSecondary">@color/Abu</item>
-        <item name="android:textColor">@color/hitam</item>
+        <item name="android:textColor">@color/putih</item>
     </style>`
 
 </resources>

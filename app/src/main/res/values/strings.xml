@@ -47,6 +47,7 @@
     <string name="fontExtraBold" translatable="false">fonts/GothamBlack.otf</string>
     <string name="fontThin" translatable="false">fonts/Gotham_Thin.otf</string>
     <string name="change_language_settings">Change Language Settings</string>
+    <string name="share_description">Use FlashMovie to know more information abaout all movies around the world!</string>
 
     <!--FONT FINISH-->
 </resources>
