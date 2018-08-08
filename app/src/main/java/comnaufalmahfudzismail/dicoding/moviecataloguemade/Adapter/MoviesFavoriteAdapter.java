@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,6 +87,17 @@ public class MoviesFavoriteAdapter extends RecyclerView.Adapter<MoviesFavoriteAd
 			}
 		});
 
+		holder.cardView.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent intent = new Intent(context, DetailActivity.class);
+				intent.putExtra(DetailActivity.MOVIE_ITEM, new Gson().toJson(movies));
+				context.startActivity(intent);
+			}
+		});
+
 		holder.share.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -109,6 +121,9 @@ public class MoviesFavoriteAdapter extends RecyclerView.Adapter<MoviesFavoriteAd
 
 	class FavoriteMovieHolder extends RecyclerView.ViewHolder
 	{
+		@BindView(R.id.fav_card)
+		CardView cardView;
+
 		@BindView(R.id.fav_photo)
 		ImageView movieImage;
 

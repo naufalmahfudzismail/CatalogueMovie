@@ -1,12 +1,15 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -42,7 +45,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.FragmentAdapter;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.ItemClickSupport;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
@@ -57,7 +59,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainActivity extends AppCompatActivity implements
+		NavigationView.OnNavigationItemSelectedListener
 {
 
 	@BindView(R.id.tablayout)
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		nav_view.setNavigationItemSelectedListener(this);
 		setSupportActionBar(toolbar);
@@ -119,9 +123,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		getMenuInflater().inflate(R.menu.menu, menu);
-		return super.onCreateOptionsMenu(menu);
+		return true;
 	}
+
 
 
 	@Override
@@ -139,25 +143,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem item)
 	{
-		int id  = item.getItemId();
+		int id = item.getItemId();
 
-		if(id == R.id.nav_fav)
+		if (id == R.id.nav_fav)
 		{
 			goToFavorite();
 		}
-		if(id == R.id.nav_home)
+		if (id == R.id.nav_home)
 		{
 			Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_nav_home), Toast.LENGTH_SHORT).show();
 
 		}
 
-		if(id == R.id.action_change_settings)
+		if (id == R.id.action_change_settings)
 		{
 			Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
 			startActivity(mIntent);
 		}
 
-		if(id == R.id.nav_share)
+		if (id == R.id.nav_share)
 		{
 			Intent intent = new Intent(Intent.ACTION_SEND);
 			intent.setType("text/plain");
@@ -168,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		}
 
 		drawer.closeDrawer(GravityCompat.START);
-		return  true;
+		return true;
 	}
 
 	private void goToFavorite()
@@ -176,5 +180,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		Intent intent = new Intent(getApplicationContext(), FavoriteActivity.class);
 		startActivity(intent);
 	}
+
 
 }

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,8 +28,7 @@ import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 
 public class MoviesNowPlayAdapter extends RecyclerView.Adapter<MoviesNowPlayAdapter.NowMovieViewHolder>
 {
-	private List<Movie> movies;
-	private Context context;
+	private List<Movie> movies = new ArrayList<>();
 	private static Movie movie;
 
 	public static Movie getMovie()
@@ -65,10 +65,9 @@ public class MoviesNowPlayAdapter extends RecyclerView.Adapter<MoviesNowPlayAdap
 		MoviesNowPlayAdapter.movie = movie;
 	}
 
-	public MoviesNowPlayAdapter(List<Movie> movies, Context context)
+	public MoviesNowPlayAdapter()
 	{
-		this.movies = movies;
-		this.context = context;
+
 	}
 
 	//A view holder inner class where we get reference to the views in the layout using their ID
@@ -111,10 +110,10 @@ public class MoviesNowPlayAdapter extends RecyclerView.Adapter<MoviesNowPlayAdap
 
 	@SuppressLint("SetTextI18n")
 	@Override
-	public void onBindViewHolder(@NonNull NowMovieViewHolder holder, @SuppressLint("RecyclerView") final int position)
+	public void onBindViewHolder(@NonNull final NowMovieViewHolder holder, @SuppressLint("RecyclerView") final int position)
 	{
 		String image_url = BuildConfig.BASE_URL_IMG + "/w342//" + movies.get(position).getPosterPath();
-		Glide.with(context)
+		Glide.with(holder.itemView.getContext())
 				.load(image_url)
 				.placeholder(android.R.drawable.sym_def_app_icon)
 				.error(android.R.drawable.sym_def_app_icon)
@@ -128,9 +127,9 @@ public class MoviesNowPlayAdapter extends RecyclerView.Adapter<MoviesNowPlayAdap
 			@Override
 			public void onClick(View v)
 			{
-				Intent intent = new Intent(context, DetailActivity.class);
+				Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
 				intent.putExtra(DetailActivity.MOVIE_ITEM, new Gson().toJson(movies.get(position)));
-				context.startActivity(intent);
+				holder.itemView.getContext().startActivity(intent);
 			}
 		});
 
@@ -142,7 +141,7 @@ public class MoviesNowPlayAdapter extends RecyclerView.Adapter<MoviesNowPlayAdap
 				intent.putExtra(Intent.EXTRA_TITLE, movies.get(position).getTitle());
 				intent.putExtra(Intent.EXTRA_SUBJECT, movies.get(position).getTitle());
 				intent.putExtra(Intent.EXTRA_TEXT, movies.get(position).getTitle() + "\n\n" + movies.get(position).getOverview());
-				context.startActivity(Intent.createChooser(intent, context.getResources().getString(R.string.share)));
+				holder.itemView.getContext().startActivity(Intent.createChooser(intent, holder.itemView.getContext().getResources().getString(R.string.share)));
 			}
 		});
 

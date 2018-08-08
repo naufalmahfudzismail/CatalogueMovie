@@ -29,10 +29,6 @@ public class DateTime
 		return result;
 	}
 
-	public static String getShortDate(String date)
-	{
-		return formatDate(date, "dd MMMM yyyy");
-	}
 
 	public static String getLongDate(String date)
 	{

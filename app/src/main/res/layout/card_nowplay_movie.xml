@@ -19,37 +19,42 @@
             android:scaleType="centerCrop"
             android:contentDescription="@string/poster_movie" />
 
-        <Button
-            android:id="@+id/now_detail"
-            android:layout_width="100dp"
-            android:layout_height="40dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/now_photo"
-            android:background="#5c938a"
+            android:layout_toRightOf="@+id/now_photo"
+            android:layout_toEndOf="@+id/now_photo">
+
+        <fr.arnaudguyon.smartfontslib.FontButton
+            style="@style/Animation.AppCompat.Dialog"
+            android:layout_width="fill_parent"
+            android:id="@+id/now_detail"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="#9ac63d"
             android:textColor="#00ffd9"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/up_detail"
             android:textSize="12sp"
-            android:layout_toRightOf="@+id/now_photo" />
+            />
 
-        <Button
+        <fr.arnaudguyon.smartfontslib.FontButton
+            style="@style/Animation.AppCompat.Dialog"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/now_detail"
             android:id="@+id/now_share"
-            android:layout_width="100dp"
             android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:background="#5c938a"
+            android:background="#9ac63d"
             android:textColor="#00ffd9"
             android:gravity="center"
             android:padding="5dp"
             android:text="@string/up_share"
             android:textSize="12sp"
-            android:layout_alignParentRight="true"
-            android:layout_toEndOf="@+id/now_detail"
             android:layout_marginStart="10dp" />
+        </LinearLayout>
 
         <fr.arnaudguyon.smartfontslib.FontTextView
             android:textColor="#000000"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
+    android:id="@+id/fav_card"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -25,7 +26,7 @@
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:layout_toEndOf="@+id/fav_photo"
-            android:background="#5c938a"
+            android:background="#9ac63d"
             android:textColor="#00ffd9"
             android:gravity="center"
             android:padding="5dp"
@@ -41,7 +42,7 @@
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:background="#5c938a"
+            android:background="#9ac63d"
             android:textColor="#00ffd9"
             android:gravity="center"
             android:padding="5dp"

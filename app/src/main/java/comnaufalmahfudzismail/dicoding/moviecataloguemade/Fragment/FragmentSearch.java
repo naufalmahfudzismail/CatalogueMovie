@@ -2,6 +2,7 @@ package comnaufalmahfudzismail.dicoding.moviecataloguemade.Fragment;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -10,9 +11,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -20,15 +25,16 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mancj.materialsearchbar.MaterialSearchBar;
+import com.mancj.materialsearchbar.SimpleOnSearchActionListener;
 
 import java.util.List;
 
+import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.MainActivity;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.ItemClickSupport;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
@@ -41,13 +47,15 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSearchActionListener, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener
+public class FragmentSearch extends Fragment implements
+		View.OnClickListener,
+		SwipeRefreshLayout.OnRefreshListener, MaterialSearchBar.OnSearchActionListener
 {
-	@BindView(R.id.rcy_movie)
-	RecyclerView recyclerView;
-
 	@BindView(R.id.movie_search)
 	MaterialSearchBar searchBar;
+
+	@BindView(R.id.rcy_movie)
+	RecyclerView recyclerView;
 
 	@BindView(R.id.refresh_layout)
 	SwipeRefreshLayout refreshLayout;
@@ -58,12 +66,11 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 	@BindView(R.id.total_movies)
 	TextView size;
 
+
 	private static final String TAG = "MainActivity";
 	private static Retrofit retrofit = null;
 
-	private List<Movie> movies;
 	private Call<MovieResponse> call;
-
 	private MoviesAdapter moviesAdapter;
 
 	private String judul_film = "";
@@ -75,42 +82,30 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 
 	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
 	{
 		v = inflater.inflate(R.layout.search_movie, container, false);
+		setHasOptionsMenu(true);
 		init_widget();
+		MoreListScroll();
 		StartRefresh();
-		return  v;
+		return v;
 
 	}
+
 
 	private void init_widget()
 	{
 		ButterKnife.bind(this, v);
-
+		moviesAdapter = new MoviesAdapter();
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-
-		ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener()
-		{
-			@Override
-			public void onItemClicked(RecyclerView recyclerView, int position, View v)
-			{
-
-				Intent intent = new Intent(getActivity(), DetailActivity.class);
-
-				Log.d(TAG, String.valueOf(movies.get(position).getId()));
-
-				intent.putExtra(DetailActivity.MOVIE_ITEM, new Gson().toJson(movies.get(position)));
-				startActivity(intent);
-			}
-		});
-
-		searchBar.setOnSearchActionListener(this);
 		refreshLayout.setOnRefreshListener(this);
+		recyclerView.setAdapter(moviesAdapter);
+		searchBar.setOnSearchActionListener(this);
+
 	}
 
-	@SuppressLint("SetTextI18n")
 	public void GetDataMovieAPI(final String judul_film)
 	{
 		String language = "en_US";
@@ -130,13 +125,12 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 		{
 			String top = getString(R.string.popular);
 			title.setText(top);
-			call = movieApiService.getPopularMovie(BuildConfig.API_KEY, language);
-		}
-
-		else
+			call = movieApiService.getPopularMovie(currentPage,BuildConfig.API_KEY, language);
+		} else
 		{
 			call = movieApiService.getSearchMovie(BuildConfig.API_KEY, currentPage, judul_film, language);
-			title.setText(getString(R.string.hasil) + judul_film);
+			String hasil = getResources().getString(R.string.hasil) + judul_film;
+			title.setText(hasil);
 		}
 
 
@@ -148,15 +142,22 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 				if (response.isSuccessful())
 				{
 					totalPages = response.body().getTotalPages();
-					movies = response.body().getResults();
-					size.setText("Total : " + movies.size());
+					int totalResult = response.body().getTotalResults();
+					List<Movie> movies = response.body().getResults();
 
-					moviesAdapter = new MoviesAdapter(movies, getActivity());
-					recyclerView.setAdapter(moviesAdapter);
+					if (currentPage > 1) moviesAdapter.updateData(movies);
+					else moviesAdapter.replaceAll(movies);
+
+					Log.d(TAG, "Number of movies received: " + movies.size());
+
+					String sizeTxt;
+					if(totalResult > 99) sizeTxt = getString(R.string.total_movie) + "99++";
+					else sizeTxt = getString(R.string.total_movie) + totalResult;
+
+					size.setText(sizeTxt);
 
 					StopRefresh();
 
-					Log.d(TAG, "Number of movies received: " + movies.size());
 
 				} else
 				{
@@ -176,6 +177,36 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 		});
 	}
 
+	private void MoreListScroll()
+	{
+		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+		{
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+			{
+				super.onScrolled(recyclerView, dx, dy);
+
+				LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+				int total = layoutManager.getItemCount();
+				int NowVisible = layoutManager.getChildCount();
+				int PastVisible = layoutManager.findFirstCompletelyVisibleItemPosition();
+				int totalMovies = moviesAdapter.getMovies().size();
+
+				if (PastVisible + NowVisible >= total && totalMovies <= 99)
+				{
+					if (currentPage < totalPages && currentPage <= 5)
+					{
+						currentPage++;
+						Toast.makeText(getActivity(), getResources().getString(R.string.Page) +" " + currentPage, Toast.LENGTH_SHORT ).show();
+					}
+
+					StartRefresh();
+				}
+			}
+		});
+	}
+
 
 	private void StartRefresh()
 	{
@@ -190,24 +221,6 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 		if (refreshLayout.isRefreshing()) refreshLayout.setRefreshing(false);
 	}
 
-	@Override
-	public void onSearchStateChanged(boolean enabled)
-	{
-
-	}
-
-	@Override
-	public void onSearchConfirmed(CharSequence text)
-	{
-		judul_film = String.valueOf(text);
-		onRefresh();
-	}
-
-	@Override
-	public void onButtonClicked(int buttonCode)
-	{
-
-	}
 
 	@Override
 	public void onClick(View v)
@@ -240,4 +253,22 @@ public class FragmentSearch extends Fragment implements MaterialSearchBar.OnSear
 
 	}
 
+	@Override
+	public void onSearchStateChanged(boolean enabled)
+	{
+
+	}
+
+	@Override
+	public void onSearchConfirmed(CharSequence text)
+	{
+		judul_film = String.valueOf(text);
+		StartRefresh();
+	}
+
+	@Override
+	public void onButtonClicked(int buttonCode)
+	{
+
+	}
 }

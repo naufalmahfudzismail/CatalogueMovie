@@ -27,7 +27,10 @@
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
+
+
 
             <android.support.v7.widget.Toolbar
                 app:titleTextColor="@color/putih"
@@ -43,6 +46,8 @@
                 android:background="#e1bb7b"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:tabGravity="fill"
+                app:tabPaddingStart="-1dp"
+                app:tabPaddingEnd="-1dp"
                 app:tabIndicatorColor="@color/colorAccent"
                 app:tabMode="fixed">
             </android.support.design.widget.TabLayout>

@@ -3,6 +3,7 @@ package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
@@ -20,8 +21,6 @@ import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.ItemClickSupport;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesFavoriteAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder;
@@ -29,7 +28,6 @@ import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 
 public class FavoriteActivity extends AppCompatActivity
 {
-	private Unbinder unbinder;
 
 	@BindView(R.id.rcy_fav)
 	RecyclerView rcy_fav;
@@ -49,7 +47,10 @@ public class FavoriteActivity extends AppCompatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_favorite);
 		ButterKnife.bind(this);
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setSupportActionBar(toolbar);
+
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setTitle(R.string.favorite);
 
@@ -64,21 +65,6 @@ public class FavoriteActivity extends AppCompatActivity
 		rcy_fav.setLayoutManager(new GridLayoutManager(this, 2));
 		rcy_fav.setAdapter(adapter);
 
-
-
-		ItemClickSupport.addTo(rcy_fav).setOnItemClickListener(new ItemClickSupport.OnItemClickListener()
-		{
-			@Override
-			public void onItemClicked(RecyclerView recyclerView, int position, View v)
-			{
-				movie = adapter.getMovie(position);
-				Log.d(TAG, String.valueOf(movie.getId()));
-				Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-				intent.putExtra(DetailActivity.MOVIE_ITEM, new Gson().toJson(movie));
-				startActivity(intent);
-			}
-
-		});
 	}
 
 

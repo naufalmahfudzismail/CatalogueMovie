@@ -2,6 +2,7 @@ package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -112,9 +113,11 @@ public class DetailActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_detail);
 
+		setContentView(R.layout.activity_detail);
 		ButterKnife.bind(this);
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		progressBar.setVisibility(View.VISIBLE);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

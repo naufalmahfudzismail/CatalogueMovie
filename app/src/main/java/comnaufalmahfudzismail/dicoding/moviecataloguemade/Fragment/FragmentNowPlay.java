@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +29,6 @@ import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.MainActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.FragmentAdapter;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.ItemClickSupport;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesNowPlayAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
@@ -54,7 +54,6 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 	private static final String TAG = "MainActivity";
 	private static Retrofit retrofit = null;
 
-	private List<Movie> movies;
 	private Call<MovieResponse> call;
 
 	private MoviesNowPlayAdapter moviesAdapter;
@@ -71,6 +70,7 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 	{
 		v = inflater.inflate(R.layout.now_play_movie, container, false);
 		init_widget();
+		MoreListScroll();
 		StartRefresh();
 		return  v;
 	}
@@ -82,6 +82,9 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 		refreshLayout.setOnRefreshListener(this);
+
+		moviesAdapter = new MoviesNowPlayAdapter();
+		recyclerView.setAdapter(moviesAdapter);
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -108,10 +111,10 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 				if (response.isSuccessful())
 				{
 					totalPages = response.body().getTotalPages();
-					movies = response.body().getResults();
+					List<Movie> movies = response.body().getResults();
 
-					moviesAdapter = new MoviesNowPlayAdapter(movies, getActivity());
-					recyclerView.setAdapter(moviesAdapter);
+					if (currentPage > 1) moviesAdapter.updateData(movies);
+					else moviesAdapter.replaceAll(movies);
 
 					StopRefresh();
 
@@ -131,6 +134,35 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 				Toast.makeText(getActivity(), R.string.gagal_koneksi, Toast.LENGTH_SHORT).show();
 				Log.e(TAG, throwable.toString());
 
+			}
+		});
+	}
+
+	private void MoreListScroll()
+	{
+		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+		{
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+			{
+				super.onScrolled(recyclerView, dx, dy);
+
+				LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+				int total = layoutManager.getItemCount();
+				int NowVisible = layoutManager.getChildCount();
+				int PastVisible = layoutManager.findFirstCompletelyVisibleItemPosition();
+				int totalMovies = moviesAdapter.getMovies().size();
+
+				if (PastVisible + NowVisible >= total && totalMovies <= 99)
+				{
+					if (currentPage < totalPages)
+					{
+						currentPage++;
+					}
+
+					StartRefresh();
+				}
 			}
 		});
 	}

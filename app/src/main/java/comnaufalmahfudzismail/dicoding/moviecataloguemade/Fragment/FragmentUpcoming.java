@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +44,6 @@ public class FragmentUpcoming extends Fragment implements View.OnClickListener, 
 	private static final String TAG = "MainActivity";
 	private static Retrofit retrofit = null;
 
-	private List<Movie> movies;
 	private Call<MovieResponse> call;
 
 	private MoviesUpcomingAdapter moviesAdapter;
@@ -60,6 +60,7 @@ public class FragmentUpcoming extends Fragment implements View.OnClickListener, 
 	{
 		v = inflater.inflate(R.layout.upcoming_movie, container, false);
 		init_widget();
+		MoreListScroll();
 		StartRefresh();
 		return  v;
 	}
@@ -71,6 +72,8 @@ public class FragmentUpcoming extends Fragment implements View.OnClickListener, 
 		recyclerView.setHasFixedSize(true);
 		recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 		refreshLayout.setOnRefreshListener(this);
+		moviesAdapter = new MoviesUpcomingAdapter();
+		recyclerView.setAdapter(moviesAdapter);
 	}
 
 	@SuppressLint("SetTextI18n")
@@ -97,10 +100,10 @@ public class FragmentUpcoming extends Fragment implements View.OnClickListener, 
 				if (response.isSuccessful())
 				{
 					totalPages = response.body().getTotalPages();
-					movies = response.body().getResults();
+					List<Movie> movies = response.body().getResults();
 
-					moviesAdapter = new MoviesUpcomingAdapter(movies, getActivity());
-					recyclerView.setAdapter(moviesAdapter);
+					if (currentPage > 1) moviesAdapter.updateData(movies);
+					else moviesAdapter.replaceAll(movies);
 
 					StopRefresh();
 
@@ -120,6 +123,35 @@ public class FragmentUpcoming extends Fragment implements View.OnClickListener, 
 				Toast.makeText(getActivity(), R.string.gagal_koneksi, Toast.LENGTH_SHORT).show();
 				Log.e(TAG, throwable.toString());
 
+			}
+		});
+	}
+
+	private void MoreListScroll()
+	{
+		recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener()
+		{
+			@Override
+			public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+			{
+				super.onScrolled(recyclerView, dx, dy);
+
+				LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+				int total = layoutManager.getItemCount();
+				int NowVisible = layoutManager.getChildCount();
+				int PastVisible = layoutManager.findFirstCompletelyVisibleItemPosition();
+				int totalMovies = moviesAdapter.getMovies().size();
+
+				if (PastVisible + NowVisible >= total && totalMovies <= 99)
+				{
+					if (currentPage < totalPages)
+					{
+						currentPage++;
+					}
+
+					StartRefresh();
+				}
 			}
 		});
 	}

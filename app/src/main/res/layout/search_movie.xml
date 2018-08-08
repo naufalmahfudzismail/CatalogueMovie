@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -24,8 +25,8 @@
                 android:paddingTop="20dp"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp">
-
             </com.mancj.materialsearchbar.MaterialSearchBar>
+
 
             <fr.arnaudguyon.smartfontslib.FontTextView
                 android:textColor="@color/colorBlack"
@@ -39,17 +40,18 @@
                 android:textStyle="bold" />
 
             <fr.arnaudguyon.smartfontslib.FontTextView
+                android:layout_below="@+id/movie_search"
                 android:textColor="@color/colorBlack"
                 android:id="@+id/total_movies"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/movie_search"
                 android:padding="10dp"
                 android:text="@string/title"
                 android:textSize="12sp"
                 android:textStyle="bold"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                tools:ignore="RelativeOverlap" />
 
             <android.support.v7.widget.RecyclerView
                 android:layout_below="@+id/title_movies"
