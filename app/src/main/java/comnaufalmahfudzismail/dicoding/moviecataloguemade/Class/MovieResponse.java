@@ -1,18 +1,22 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Class;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 
-public class MovieResponse
+public class MovieResponse implements Parcelable
 {
 	@SerializedName("page")
 	private int page;
 
 	@SerializedName("results")
-	private List<Movie> results;
+	private List<Movie> results = new ArrayList<>();
 
 	@SerializedName("total_results")
 	private int totalResults;
@@ -22,6 +26,34 @@ public class MovieResponse
 
 	@SerializedName("dates")
 	private Dates date;
+
+	public MovieResponse()
+	{
+
+	}
+
+	protected MovieResponse(Parcel in)
+	{
+		page = in.readInt();
+		results = in.createTypedArrayList(Movie.CREATOR);
+		totalResults = in.readInt();
+		totalPages = in.readInt();
+	}
+
+	public static final Creator<MovieResponse> CREATOR = new Creator<MovieResponse>()
+	{
+		@Override
+		public MovieResponse createFromParcel(Parcel in)
+		{
+			return new MovieResponse(in);
+		}
+
+		@Override
+		public MovieResponse[] newArray(int size)
+		{
+			return new MovieResponse[size];
+		}
+	};
 
 	public Dates getDate()
 	{
@@ -71,5 +103,20 @@ public class MovieResponse
 	public void setTotalPages(int totalPages)
 	{
 		this.totalPages = totalPages;
+	}
+
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeInt(page);
+		dest.writeTypedList(results);
+		dest.writeInt(totalResults);
+		dest.writeInt(totalPages);
 	}
 }

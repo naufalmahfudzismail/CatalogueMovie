@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.TextAppearanceSpan;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -49,6 +50,7 @@ import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Region;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Fragment.FragmentNowPlay;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Fragment.FragmentSearch;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Fragment.FragmentUpcoming;
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements
 
 	private final static String TAG = "MainMenu";
 
+
 	//public static boolean isID = false;
 
 	@Override
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		ButterKnife.bind(this);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 		nav_view.setNavigationItemSelectedListener(this);
 		setSupportActionBar(toolbar);
@@ -102,23 +105,18 @@ public class MainActivity extends AppCompatActivity implements
 		toggle.syncState();
 		nav_view.setNavigationItemSelectedListener(this);
 
-		drawer.setViewScale(Gravity.START, 0.9f);
-		drawer.setRadius(Gravity.START, 35);
+		drawer.setViewScale(Gravity.START, 0.8f);
+		drawer.setRadius(Gravity.START, 30);
 		drawer.setViewElevation(Gravity.START, 20);
 
-
-		FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
-
-		fragmentAdapter.addFragmet(new FragmentSearch(), getString(R.string.searchFragment));
-		fragmentAdapter.addFragmet(new FragmentNowPlay(), getString(R.string.now_playingFragment));
-		fragmentAdapter.addFragmet(new FragmentUpcoming(), getString(R.string.upcomingFragment));
-
-		viewPager.setAdapter(fragmentAdapter);
-		tab.setupWithViewPager(viewPager);
+		setFragment();
+		titleNavColor();
 
 		//isID = Locale.getDefault().getLanguage().equals("in");
 
 	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
@@ -149,11 +147,6 @@ public class MainActivity extends AppCompatActivity implements
 		{
 			goToFavorite();
 		}
-		if (id == R.id.nav_home)
-		{
-			Toast.makeText(getApplicationContext(), getResources().getString(R.string.toast_nav_home), Toast.LENGTH_SHORT).show();
-
-		}
 
 		if (id == R.id.action_change_settings)
 		{
@@ -171,6 +164,32 @@ public class MainActivity extends AppCompatActivity implements
 			startActivity(Intent.createChooser(intent, getResources().getString(R.string.share)));
 		}
 
+		if (id == R.id.region_indo)
+		{
+			Region.region = "ID";
+			restartActivity();
+		}
+		if (id == R.id.region_usa)
+		{
+			Region.region = "US";
+			restartActivity();
+		}
+		if (id == R.id.region_japan)
+		{
+			Region.region = "JP";
+			restartActivity();
+		}
+		if (id == R.id.region_rusia)
+		{
+			Region.region = "RU";
+			restartActivity();
+		}
+		if (id == R.id.region_jerman)
+		{
+			Region.region = "DE";
+			restartActivity();
+		}
+
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 	}
@@ -181,5 +200,56 @@ public class MainActivity extends AppCompatActivity implements
 		startActivity(intent);
 	}
 
+
+	private void setFragment()
+	{
+		FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+
+		fragmentAdapter.addFragmet(new FragmentSearch(), getString(R.string.searchFragment));
+		fragmentAdapter.addFragmet(new FragmentNowPlay(), getString(R.string.now_playingFragment));
+		fragmentAdapter.addFragmet(new FragmentUpcoming(), getString(R.string.upcomingFragment));
+
+		viewPager.setAdapter(fragmentAdapter);
+		tab.setupWithViewPager(viewPager);
+
+	}
+
+	private void titleNavColor()
+	{
+		Menu menu = nav_view.getMenu();
+		MenuItem menuItem2 = menu.findItem(R.id.title_two);
+		SpannableString d = new SpannableString(menuItem2.getTitle());
+		d.setSpan(new TextAppearanceSpan(this, R.style.TitleColorOne), 0, d.length(), 0);
+		menuItem2.setTitle(d);
+
+		if(Region.region.equals("ID"))
+		{
+			getSupportActionBar().setSubtitle(getText(R.string.region) + " : " +getText(R.string.indonesia_region));
+		}
+		if(Region.region.equals("US"))
+		{
+			getSupportActionBar().setSubtitle(getText(R.string.region) + " : " + getText(R.string.united_state_region));
+		}
+		if(Region.region.equals("JP"))
+		{
+			getSupportActionBar().setSubtitle(getText(R.string.region) + " : " + getText(R.string.japan_region));
+		}
+		if(Region.region.equals("RU"))
+		{
+			getSupportActionBar().setSubtitle(getText(R.string.region) + " : " + getText(R.string.russia_region));
+		}
+		if(Region.region.equals("DE"))
+		{
+			getSupportActionBar().setSubtitle(getText(R.string.region) + " : " + getText(R.string.german_region));
+		}
+	}
+
+
+	private void restartActivity()
+	{
+		Intent intent = new Intent(getIntent());
+		finish();
+		startActivity(intent);
+	}
 
 }

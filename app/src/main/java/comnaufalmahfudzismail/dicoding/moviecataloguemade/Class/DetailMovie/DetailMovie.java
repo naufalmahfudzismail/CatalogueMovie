@@ -6,13 +6,18 @@
 
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 
-public class DetailMovie
+public class DetailMovie implements Parcelable, Serializable
 {
 
 	@SerializedName("original_language")
@@ -34,13 +39,13 @@ public class DetailMovie
 	private int revenue;
 
 	@SerializedName("genres")
-	private List<GenresItem> genres;
+	private List<GenresItem> genres  = new ArrayList<>();
 
 	@SerializedName("popularity")
 	private double popularity;
 
 	@SerializedName("production_countries")
-	private List<ProductionCountriesItem> productionCountries;
+	private List<ProductionCountriesItem> productionCountries = new ArrayList<>();
 
 	@SerializedName("id")
 	private int id;
@@ -64,10 +69,10 @@ public class DetailMovie
 	private String posterPath;
 
 	@SerializedName("spoken_languages")
-	private List<SpokenLanguagesItem> spokenLanguages;
+	private List<SpokenLanguagesItem> spokenLanguages  = new ArrayList<>();
 
 	@SerializedName("production_companies")
-	private List<ProductionCompaniesItem> productionCompanies;
+	private List<ProductionCompaniesItem> productionCompanies = new ArrayList<>();
 
 	@SerializedName("release_date")
 	private String releaseDate;
@@ -89,6 +94,50 @@ public class DetailMovie
 
 	@SerializedName("status")
 	private String status;
+
+	public DetailMovie()
+	{
+
+	}
+
+	public DetailMovie(Parcel in)
+	{
+		originalLanguage = in.readString();
+		imdbId = in.readString();
+		video = in.readByte() != 0;
+		title = in.readString();
+		backdropPath = in.readString();
+		revenue = in.readInt();
+		popularity = in.readDouble();
+		id = in.readInt();
+		voteCount = in.readInt();
+		budget = in.readInt();
+		overview = in.readString();
+		originalTitle = in.readString();
+		runtime = in.readInt();
+		posterPath = in.readString();
+		releaseDate = in.readString();
+		voteAverage = in.readDouble();
+		tagline = in.readString();
+		adult = in.readByte() != 0;
+		homepage = in.readString();
+		status = in.readString();
+	}
+
+	public static final Creator<DetailMovie> CREATOR = new Creator<DetailMovie>()
+	{
+		@Override
+		public DetailMovie createFromParcel(Parcel in)
+		{
+			return new DetailMovie(in);
+		}
+
+		@Override
+		public DetailMovie[] newArray(int size)
+		{
+			return new DetailMovie[size];
+		}
+	};
 
 	public String getOriginalLanguage()
 	{
@@ -341,4 +390,34 @@ public class DetailMovie
 	}
 
 
+	@Override
+	public int describeContents()
+	{
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags)
+	{
+		dest.writeString(originalLanguage);
+		dest.writeString(imdbId);
+		dest.writeByte((byte) (video ? 1 : 0));
+		dest.writeString(title);
+		dest.writeString(backdropPath);
+		dest.writeInt(revenue);
+		dest.writeDouble(popularity);
+		dest.writeInt(id);
+		dest.writeInt(voteCount);
+		dest.writeInt(budget);
+		dest.writeString(overview);
+		dest.writeString(originalTitle);
+		dest.writeInt(runtime);
+		dest.writeString(posterPath);
+		dest.writeString(releaseDate);
+		dest.writeDouble(voteAverage);
+		dest.writeString(tagline);
+		dest.writeByte((byte) (adult ? 1 : 0));
+		dest.writeString(homepage);
+		dest.writeString(status);
+	}
 }

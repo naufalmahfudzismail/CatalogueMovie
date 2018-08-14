@@ -3,11 +3,14 @@ package comnaufalmahfudzismail.dicoding.moviecataloguemade.Fragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.Loader;
+import android.os.Parcelable;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,16 +19,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mancj.materialsearchbar.MaterialSearchBar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiClient;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieAsyncTask;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.MainActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.FragmentAdapter;
@@ -35,6 +42,7 @@ import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Region;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,7 +50,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FragmentNowPlay extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener
+public class FragmentNowPlay extends Fragment implements
+		View.OnClickListener,
+		SwipeRefreshLayout.OnRefreshListener,
+		LoaderManager.LoaderCallbacks<MovieResponse>
 {
 	@BindView(R.id.rcy_now_play)
 	RecyclerView recyclerView;
@@ -50,29 +61,57 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 	@BindView(R.id.refresh_layout_now)
 	SwipeRefreshLayout refreshLayout;
 
+	@BindView(R.id.progress_now)
+	ProgressBar progressBar;
 
-	private static final String TAG = "MainActivity";
-	private static Retrofit retrofit = null;
 
-	private Call<MovieResponse> call;
+	private List<Movie> movies = new ArrayList<>();
+	private MovieResponse movieResponse = new MovieResponse();
 
 	private MoviesNowPlayAdapter moviesAdapter;
 
 	private int currentPage = 1;
 	private int totalPages = 1;
+	private boolean isStarted = false;
 
 	View v;
 
-
 	@Nullable
 	@Override
-	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
+	public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState)
 	{
 		v = inflater.inflate(R.layout.now_play_movie, container, false);
 		init_widget();
 		MoreListScroll();
 		StartRefresh();
-		return  v;
+		return v;
+	}
+
+	@NonNull
+	@Override //Method Execute After InitLoader or RestartLoader in StartRefresh
+	public android.support.v4.content.Loader<MovieResponse> onCreateLoader(int id, @Nullable Bundle args)
+	{
+		return new MovieAsyncTask(getContext(), currentPage, 1, Region.region);
+	}
+
+	@Override //Method Execute After onCreateLoader Response succesfull
+	public void onLoadFinished(@NonNull android.support.v4.content.Loader<MovieResponse> loader, MovieResponse data)
+	{
+		movieResponse = data;
+		movies = movieResponse.getResults();
+		totalPages = movieResponse.getTotalPages();
+		if (currentPage > 1)
+		{
+			moviesAdapter.updateData(movies);
+		} else
+			moviesAdapter.replaceAll(movies);
+		StopRefresh();
+	}
+
+	@Override
+	public void onLoaderReset(@NonNull android.support.v4.content.Loader<MovieResponse> loader)
+	{
+
 	}
 
 	private void init_widget()
@@ -87,22 +126,9 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 		recyclerView.setAdapter(moviesAdapter);
 	}
 
-	@SuppressLint("SetTextI18n")
-	public void GetDataMovieAPI()
+	/*public void GetDataMovieAPI()
 	{
-		String language = "en_US";
-
-
-		if (retrofit == null)
-		{
-			retrofit = new Retrofit.Builder()
-					.baseUrl(BuildConfig.BASE_URL)
-					.addConverterFactory(GsonConverterFactory.create())
-					.build();
-		}
-
-		MovieApiService movieApiService = retrofit.create(MovieApiService.class);
-		call = movieApiService.getNowPlaying(BuildConfig.API_KEY, currentPage, "US", language);
+		call = movieApiClient.getService().getNowPlaying(currentPage, Region.region);
 		call.enqueue(new Callback<MovieResponse>()
 		{
 			@Override
@@ -113,8 +139,10 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 					totalPages = response.body().getTotalPages();
 					List<Movie> movies = response.body().getResults();
 
-					if (currentPage > 1) moviesAdapter.updateData(movies);
-					else moviesAdapter.replaceAll(movies);
+					if (currentPage > 1)
+					{
+						moviesAdapter.updateData(movies);
+					} else moviesAdapter.replaceAll(movies);
 
 					StopRefresh();
 
@@ -136,7 +164,7 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 
 			}
 		});
-	}
+	}*/
 
 	private void MoreListScroll()
 	{
@@ -159,27 +187,32 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 					if (currentPage < totalPages)
 					{
 						currentPage++;
+						StartRefresh();
 					}
 
-					StartRefresh();
 				}
 			}
 		});
 	}
 
-
 	private void StartRefresh()
 	{
 		if (refreshLayout.isRefreshing()) return;
 		refreshLayout.setRefreshing(true);
-		GetDataMovieAPI();
+		if (currentPage > 1 || isStarted)
+		{
+			getLoaderManager().restartLoader(0, null, this);
+		} else
+		{
+			getLoaderManager().initLoader(0, null, this);
+			isStarted = true;
+		}
 	}
 
 	private void StopRefresh()
 	{
 		if (refreshLayout.isRefreshing()) refreshLayout.setRefreshing(false);
 	}
-
 
 	@Override
 	public void onClick(View v)
@@ -198,19 +231,6 @@ public class FragmentNowPlay extends Fragment implements View.OnClickListener, S
 
 	}
 
-	@Override
-	public void onDestroy()
-	{
-		super.onDestroy();
-		if (call != null) call.cancel();
-	}
-
-	@Override
-	public void onDetach()
-	{
-		super.onDetach();
-		if (call != null) call.cancel();
-	}
 }
 
 

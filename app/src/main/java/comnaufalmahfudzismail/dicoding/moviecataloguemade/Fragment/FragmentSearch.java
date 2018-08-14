@@ -1,7 +1,8 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.Activity;;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -9,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,12 +30,15 @@ import com.google.gson.Gson;
 import com.mancj.materialsearchbar.MaterialSearchBar;
 import com.mancj.materialsearchbar.SimpleOnSearchActionListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiClient;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieAsyncTask;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.MainActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
@@ -40,6 +46,7 @@ import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Region;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,7 +56,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentSearch extends Fragment implements
 		View.OnClickListener,
-		SwipeRefreshLayout.OnRefreshListener, MaterialSearchBar.OnSearchActionListener
+		SwipeRefreshLayout.OnRefreshListener, MaterialSearchBar.OnSearchActionListener,
+		LoaderManager.LoaderCallbacks<MovieResponse>
 {
 	@BindView(R.id.movie_search)
 	MaterialSearchBar searchBar;
@@ -68,14 +76,19 @@ public class FragmentSearch extends Fragment implements
 
 
 	private static final String TAG = "MainActivity";
-	private static Retrofit retrofit = null;
-
-	private Call<MovieResponse> call;
+	private static final String TITLE = "title";
 	private MoviesAdapter moviesAdapter;
+
+	private MovieResponse movieResponse = new MovieResponse();
+	private List<Movie> movies = new ArrayList<>();
+
+	private Bundle bundle = new Bundle();
 
 	private String judul_film = "";
 	private int currentPage = 1;
 	private int totalPages = 1;
+	private int totalResult;
+	private boolean isStarted = false;
 
 	View v;
 
@@ -88,11 +101,49 @@ public class FragmentSearch extends Fragment implements
 		setHasOptionsMenu(true);
 		init_widget();
 		MoreListScroll();
+		bundle.putString(TITLE,judul_film);
 		StartRefresh();
 		return v;
-
 	}
 
+	@NonNull
+	@Override
+	public Loader<MovieResponse> onCreateLoader(int id, @Nullable Bundle args)
+	{
+		if (args != null)
+		{
+			judul_film = args.getString(TITLE);
+		}
+		refreshLayout.setRefreshing(true);
+
+		if (judul_film.isEmpty())
+			return new MovieAsyncTask(getContext(), 4, currentPage, judul_film, Region.region);
+		else
+			return new MovieAsyncTask(getContext(), 3, currentPage, judul_film, Region.region);
+	}
+
+	@Override
+	public void onLoadFinished(@NonNull Loader<MovieResponse> loader, MovieResponse data)
+	{
+		movieResponse = data;
+		movies = movieResponse.getResults();
+		totalResult = movieResponse.getTotalResults();
+		totalPages = movieResponse.getTotalPages();
+
+		if (currentPage > 1)
+		{
+			moviesAdapter.updateData(movies);
+		}
+		else
+			moviesAdapter.replaceAll(movies);
+		fetchUI();
+		StopRefresh();
+	}
+
+	@Override
+	public void onLoaderReset(@NonNull Loader<MovieResponse> loader)
+	{
+	}
 
 	private void init_widget()
 	{
@@ -106,33 +157,16 @@ public class FragmentSearch extends Fragment implements
 
 	}
 
-	public void GetDataMovieAPI(final String judul_film)
+	/*public void GetDataMovieAPI(final String judul_film)
 	{
-		String language = "en_US";
-
-
-		if (retrofit == null)
-		{
-			retrofit = new Retrofit.Builder()
-					.baseUrl(BuildConfig.BASE_URL)
-					.addConverterFactory(GsonConverterFactory.create())
-					.build();
-		}
-
-		MovieApiService movieApiService = retrofit.create(MovieApiService.class);
 
 		if (judul_film.isEmpty())
 		{
-			String top = getString(R.string.popular);
-			title.setText(top);
-			call = movieApiService.getPopularMovie(currentPage,BuildConfig.API_KEY, language);
+			call = movieApiClient.getService().getPopularMovie(currentPage, Region.region);
 		} else
 		{
-			call = movieApiService.getSearchMovie(BuildConfig.API_KEY, currentPage, judul_film, language);
-			String hasil = getResources().getString(R.string.hasil) + judul_film;
-			title.setText(hasil);
+			call = movieApiClient.getService().getSearchMovie(currentPage, judul_film, Region.region);
 		}
-
 
 		call.enqueue(new Callback<MovieResponse>()
 		{
@@ -142,22 +176,15 @@ public class FragmentSearch extends Fragment implements
 				if (response.isSuccessful())
 				{
 					totalPages = response.body().getTotalPages();
-					int totalResult = response.body().getTotalResults();
-					List<Movie> movies = response.body().getResults();
-
-					if (currentPage > 1) moviesAdapter.updateData(movies);
-					else moviesAdapter.replaceAll(movies);
+					totalResult = response.body().getTotalResults();
+					movieResponse = response.body();
+					movies = movieResponse.getResults();
+					fetchUI();
 
 					Log.d(TAG, "Number of movies received: " + movies.size());
 
-					String sizeTxt;
-					if(totalResult > 99) sizeTxt = getString(R.string.total_movie) + "99++";
-					else sizeTxt = getString(R.string.total_movie) + totalResult;
-
-					size.setText(sizeTxt);
 
 					StopRefresh();
-
 
 				} else
 				{
@@ -175,6 +202,27 @@ public class FragmentSearch extends Fragment implements
 
 			}
 		});
+	}*/
+
+	private void fetchUI()
+	{
+
+		if (judul_film.isEmpty())
+		{
+			String top = getString(R.string.popular);
+			title.setText(top);
+		} else
+		{
+			String hasil = getResources().getString(R.string.hasil) + judul_film;
+			title.setText(hasil);
+		}
+
+		String sizeTxt;
+
+		if (totalResult > 99) sizeTxt = getString(R.string.total_movie) + "99++";
+		else sizeTxt = getString(R.string.total_movie) + totalResult;
+
+		size.setText(sizeTxt);
 	}
 
 	private void MoreListScroll()
@@ -198,10 +246,9 @@ public class FragmentSearch extends Fragment implements
 					if (currentPage < totalPages && currentPage <= 5)
 					{
 						currentPage++;
-						Toast.makeText(getActivity(), getResources().getString(R.string.Page) +" " + currentPage, Toast.LENGTH_SHORT ).show();
+						StartRefresh();
 					}
 
-					StartRefresh();
 				}
 			}
 		});
@@ -213,7 +260,16 @@ public class FragmentSearch extends Fragment implements
 		if (refreshLayout.isRefreshing()) return;
 		refreshLayout.setRefreshing(true);
 
-		GetDataMovieAPI(judul_film);
+		if (currentPage > 1 || isStarted)
+		{
+			getLoaderManager().restartLoader(0, bundle, this);
+		} else
+		{
+			getLoaderManager().initLoader(0, bundle, this);
+			isStarted = true;
+		}
+
+		//fetchUI();
 	}
 
 	private void StopRefresh()
@@ -236,14 +292,6 @@ public class FragmentSearch extends Fragment implements
 
 		StopRefresh();
 		StartRefresh();
-
-	}
-
-	@Override
-	public void onDestroy()
-	{
-		super.onDestroy();
-		if (call != null) call.cancel();
 	}
 
 	@Override
@@ -252,17 +300,16 @@ public class FragmentSearch extends Fragment implements
 		super.onDetach();
 
 	}
-
 	@Override
 	public void onSearchStateChanged(boolean enabled)
 	{
 
 	}
-
 	@Override
 	public void onSearchConfirmed(CharSequence text)
 	{
 		judul_film = String.valueOf(text);
+		bundle.putString(TITLE, judul_film);
 		StartRefresh();
 	}
 
@@ -271,4 +318,5 @@ public class FragmentSearch extends Fragment implements
 	{
 
 	}
+
 }

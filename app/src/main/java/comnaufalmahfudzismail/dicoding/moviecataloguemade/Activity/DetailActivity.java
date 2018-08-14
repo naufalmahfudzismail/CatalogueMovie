@@ -27,12 +27,14 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiClient;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.DateTime;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.FavoriteBuilder;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
@@ -100,9 +102,10 @@ public class DetailActivity extends AppCompatActivity
 
 	private static final String TAG = "DetailActivity";
 
-	private Movie movie;
+	private Movie movie = new Movie();
 	private Call<DetailMovie> call;
-	private Retrofit retrofit;
+	private DetailMovie detailMovie = new DetailMovie();
+	private MovieApiClient movieApiClient = new MovieApiClient();
 	public static final String MOVIE_ITEM = "movie_item";
 	private Gson gson = new Gson();
 
@@ -113,36 +116,159 @@ public class DetailActivity extends AppCompatActivity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.activity_detail);
 		ButterKnife.bind(this);
 
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		progressBar.setVisibility(View.VISIBLE);
 		setSupportActionBar(toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		String movie_item = getIntent().getStringExtra(MOVIE_ITEM);
-		GetDetailData(movie_item);
+		progressBar.setVisibility(View.VISIBLE);
+
+		if(savedInstanceState != null)
+		{
+			movie = (Movie) savedInstanceState.getSerializable("movie");
+			detailMovie = (DetailMovie) savedInstanceState.getSerializable("detailMovie");
+			if (detailMovie != null)
+			{
+				fetchingUI(detailMovie);
+			}
+		}
+		else
+		{
+			String movie_item = getIntent().getStringExtra(MOVIE_ITEM);
+			GetDetailData(movie_item);
+		}
+
+		loadDataSQLite(movie);
+
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		super.onSaveInstanceState(outState);
+		outState.putSerializable("detailMovie", detailMovie);
+		outState.putSerializable("movie", movie);
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
-
 		if (call != null) call.cancel();
 	}
 
 	private void GetDetailData(String movie_item)
 	{
-		movie = gson.fromJson(movie_item, Movie.class);
-		loadDataSQLite(movie);
 
+		movie = gson.fromJson(movie_item, Movie.class);
+		GetDetailDataFromServer(String.valueOf(movie.getId()));
 		Log.d(TAG, String.valueOf(movie.getId()));
+	}
+
+	private void GetDetailDataFromServer(String id_movie)
+	{
+		call = movieApiClient.getService().getDetailMovie(id_movie);
+		call.enqueue(new Callback<DetailMovie>()
+		{
+			@Override
+			public void onResponse(Call<DetailMovie> call, Response<DetailMovie> response)
+			{
+				if( response.isSuccessful())
+				{
+					detailMovie = response.body();
+					fetchingUI(detailMovie);
+
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(), R.string.gagal_koneksi, Toast.LENGTH_SHORT).show();
+				}
+			}
+			@Override
+			public void onFailure(Call<DetailMovie> call, Throwable t)
+			{
+
+				Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	private void fetchingUI(DetailMovie detailMovie)
+	{
+		String unknown = getResources().getString(R.string.tidak_diketahui);
+
+		int size = 0;
+
+		StringBuilder genres = new StringBuilder();
+		size = detailMovie.getGenres().size();
+		for (int i = 0; i < size; i++)
+		{
+			genres.append("✸ ").append(detailMovie.getGenres().get(i).getName()).append(i + 1 < size ? "\n" : "");
+		}
+
+		detail_genre.setText(genres.toString());
+
+		if (detailMovie.getBelongsToCollection() != null)
+		{
+			Glide.with(DetailActivity.this)
+					.load(BuildConfig.BASE_URL_IMG + "/w154" + detailMovie.getBelongsToCollection().getPosterPath())
+					.into(detail_img_post_prod);
+
+			prod_title.setText(detailMovie.getBelongsToCollection().getName());
+		} else
+		{
+			prod_title.setText(unknown);
+		}
+
+		String budget;
+		String revenue;
+
+		if (detailMovie.getBudget() <= 0) budget = getString(R.string.tidak_diketahui);
+		else
+			budget = "$ " + NumberFormat.getIntegerInstance().format(detailMovie.getBudget());
+		if (detailMovie.getRevenue() <= 0) revenue = getString(R.string.tidak_diketahui);
+		else
+			revenue = "$ " + NumberFormat.getIntegerInstance().format(detailMovie.getRevenue());
+
+		prod_budget.setText(budget);
+		prod_revenue.setText(revenue);
+
+		if (detailMovie.getProductionCompanies() != null)
+		{
+
+			StringBuilder companies = new StringBuilder();
+			size = detailMovie.getProductionCompanies().size();
+
+			for (int i = 0; i < size; i++)
+			{
+				companies.append("✸ ").append(detailMovie.getProductionCompanies().get(i).getName()).append(i + 1 < size ? "\n" : "");
+			}
+
+			prod_companies.setText(companies.toString());
+		} else
+		{
+			prod_companies.setText(unknown);
+		}
+
+		if (detailMovie.getProductionCountries() != null)
+		{
+
+			StringBuilder countries = new StringBuilder();
+			size = detailMovie.getProductionCountries().size();
+
+			for (int i = 0; i < size; i++)
+			{
+				countries.append("✸ ").append(detailMovie.getProductionCountries().get(i).getName()).append(i + 1 < size ? "\n" : "");
+			}
+
+			prod_countries.setText(countries.toString());
+		} else
+		{
+			prod_countries.setText(unknown);
+		}
 
 		getSupportActionBar().setTitle(movie.getTitle());
-		GetDetailDataFromServer(String.valueOf(movie.getId()));
 
 		detail_title.setText(movie.getTitle());
 
@@ -169,117 +295,7 @@ public class DetailActivity extends AppCompatActivity
 			star_img[integerPart].setImageResource(R.drawable.ic_star_half_black_24dp);
 		}
 
-	}
-
-	private void GetDetailDataFromServer(String id_movie)
-	{
-		if (retrofit == null)
-		{
-			retrofit = new Retrofit.Builder()
-					.baseUrl(BuildConfig.BASE_URL)
-					.addConverterFactory(GsonConverterFactory.create())
-					.build();
-		}
-
-		MovieApiService movieApiService = retrofit.create(MovieApiService.class);
-		call = movieApiService.getDetailMovie(id_movie, BuildConfig.API_KEY);
-		call.enqueue(new Callback<DetailMovie>()
-		{
-			@SuppressLint("SetTextI18n")
-			@Override
-			public void onResponse(Call<DetailMovie> call, Response<DetailMovie> response)
-			{
-				if( response.isSuccessful())
-				{
-					DetailMovie d_movie = response.body();
-					String unknown = getResources().getString(R.string.tidak_diketahui);
-
-					int size = 0;
-
-					StringBuilder genres = new StringBuilder();
-					size = d_movie.getGenres().size();
-					for (int i = 0; i < size; i++)
-					{
-						genres.append("✸ ").append(d_movie.getGenres().get(i).getName()).append(i + 1 < size ? "\n" : "");
-					}
-
-					detail_genre.setText(genres.toString());
-
-					if (d_movie.getBelongsToCollection() != null)
-					{
-						Glide.with(DetailActivity.this)
-								.load(BuildConfig.BASE_URL_IMG + "/w154" + d_movie.getBelongsToCollection().getPosterPath())
-								.into(detail_img_post_prod);
-
-						prod_title.setText(d_movie.getBelongsToCollection().getName());
-					} else
-					{
-						prod_title.setText(unknown);
-					}
-
-					String budget;
-					String revenue;
-
-					if (d_movie.getBudget() <= 0) budget = getString(R.string.tidak_diketahui);
-					else
-						budget = "$ " + NumberFormat.getIntegerInstance().format(d_movie.getBudget());
-					if (d_movie.getRevenue() <= 0) revenue = getString(R.string.tidak_diketahui);
-					else
-						revenue = "$ " + NumberFormat.getIntegerInstance().format(d_movie.getRevenue());
-
-					prod_budget.setText(budget);
-					prod_revenue.setText(revenue);
-
-					if (d_movie.getProductionCompanies() != null)
-					{
-
-						StringBuilder companies = new StringBuilder();
-						size = d_movie.getProductionCompanies().size();
-
-						for (int i = 0; i < size; i++)
-						{
-							companies.append("✸ ").append(d_movie.getProductionCompanies().get(i).getName()).append(i + 1 < size ? "\n" : "");
-						}
-
-						prod_companies.setText(companies.toString());
-					} else
-					{
-						prod_companies.setText(unknown);
-					}
-
-					if (d_movie.getProductionCountries() != null)
-					{
-
-						StringBuilder countries = new StringBuilder();
-						size = d_movie.getProductionCountries().size();
-
-						for (int i = 0; i < size; i++)
-						{
-							countries.append("✸ ").append(d_movie.getProductionCountries().get(i).getName()).append(i + 1 < size ? "\n" : "");
-						}
-
-						prod_countries.setText(countries.toString());
-					} else
-					{
-						prod_countries.setText(unknown);
-					}
-
-					progressBar.setVisibility(View.GONE);
-				}
-				else
-				{
-					Toast.makeText(getApplicationContext(), R.string.gagal_koneksi, Toast.LENGTH_SHORT).show();
-				}
-
-			}
-
-			@Override
-			public void onFailure(Call<DetailMovie> call, Throwable t)
-			{
-
-				Toast.makeText(DetailActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-			}
-		});
+		progressBar.setVisibility(View.GONE);
 	}
 
 	private void loadDataSQLite(Movie movie)
@@ -301,7 +317,6 @@ public class DetailActivity extends AppCompatActivity
 			cursor.close();
 		}
 		setFavoriteFabIcon();
-
 		favoriteHelper.close();
 	}
 

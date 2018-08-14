@@ -15,6 +15,10 @@
         <item name="android:textColorPrimary">@color/putih</item>
         <item name="android:textColorSecondary">@color/Abu</item>
         <item name="android:textColor">@color/putih</item>
-    </style>`
+    </style>
+
+    <style name="TitleColorOne">
+        <item name="android:textColor">@color/hitam</item>
+    </style>
 
 </resources>

@@ -37,4 +37,10 @@
     <string name="change_language_settings">Ganti Bahasa</string>
     <string name="share_description">Gunakan Aplikasi FlashMovie untuk mencari infromasi segalanya tentang dunia perfilman!</string>
     <string name="total_movie">Total :</string>
+    <string name="region">Wilayah Film</string>
+    <string name="indonesia_region">Indonesia</string>
+    <string name="united_state_region">Amerika</string>
+    <string name="japan_region">Jepang</string>
+    <string name="russia_region">Rusia</string>
+    <string name="german_region">Jerman</string>
 </resources>

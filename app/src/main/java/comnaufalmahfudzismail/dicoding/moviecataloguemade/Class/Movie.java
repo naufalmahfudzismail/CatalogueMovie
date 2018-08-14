@@ -6,6 +6,11 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +18,7 @@ import static android.provider.BaseColumns._ID;
 import static comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder.*;
 import static comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder.MovieColumns.*;
 
-public class Movie implements Parcelable
+public class Movie implements Parcelable, Serializable
 {
 	@SerializedName("poster_path")
 	private String posterPath;
@@ -78,6 +83,34 @@ public class Movie implements Parcelable
 		this.voteAverage = voteAverage;
 	}
 
+	public Movie()
+	{
+
+	}
+
+	public Movie(JSONObject movie) throws JSONException
+	{
+		this.id = movie.getInt("id");
+		this.popularity = movie.getDouble("popularity");
+		this.title = movie.getString("title");
+		this.voteCount = movie.getInt("vote_count");
+		JSONArray genres = movie.getJSONArray("genre_ids");
+		for(int i = 0; i<genres.length(); i++)
+		{
+			int jsonObject =  genres.getInt(i);
+			this.genreIds.add(jsonObject);
+		}
+		this.backdropPath = movie.getString("backdrop_path");
+		this.posterPath = movie.getString("poster_path");
+		this.overview = movie.getString("overview");
+		this.releaseDate = movie.getString("release_date");
+		this.voteAverage = movie.getDouble("vote_average");
+		this.originalTitle = movie.getString("original_title");
+		this.originalLanguage = movie.getString("original_language");
+		this.video = movie.getBoolean("video");
+		this.adult = movie.getBoolean("adult");
+
+	}
 	public Movie (Cursor cursor)
 	{
 		this.id = getColumnInt(cursor, _ID);

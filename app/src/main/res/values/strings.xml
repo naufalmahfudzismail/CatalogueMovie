@@ -51,5 +51,14 @@
     <string name="total_movie">Total :</string>
     <string name="search">Search</string>
 
+    <string name="overload_number">99++</string>
+    <string name="total_movies">Number of movies received:</string>
+    <string name="region">Movies Region</string>
+    <string name="indonesia_region">Indonesia</string>
+    <string name="united_state_region">United State</string>
+    <string name="japan_region">Japan</string>
+    <string name="russia_region">Russia</string>
+    <string name="german_region">German</string>
+
     <!--FONT FINISH-->
 </resources>

@@ -30,8 +30,6 @@
             android:layout_height="wrap_content"
             >
 
-
-
             <android.support.v7.widget.Toolbar
                 app:titleTextColor="@color/putih"
                 android:id="@+id/Main_toolbar"

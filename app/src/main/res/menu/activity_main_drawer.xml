@@ -2,34 +2,46 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-
-
-    <item android:title="@string/Page"
-        android:icon="@color/hitam">
+    <item
+        android:id="@+id/title_two"
+        android:title="@string/region">
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/nav_home"
-                    android:icon="@drawable/ic_home"
-                    android:title="@string/main_menu" />
+                    android:id="@+id/region_indo"
+                    android:icon="@drawable/ic_region"
+                    android:title="@string/indonesia_region" />
                 <item
-                    android:id="@+id/nav_fav"
-                    android:icon="@drawable/ic_star_black_24dp"
-                    android:title="@string/favorite" />
+                    android:id="@+id/region_usa"
+                    android:icon="@drawable/ic_region"
+                    android:title="@string/united_state_region" />
+                <item
+                    android:id="@+id/region_japan"
+                    android:icon="@drawable/ic_region"
+                    android:title="@string/japan_region" />
+                <item
+                    android:id="@+id/region_rusia"
+                    android:icon="@drawable/ic_region"
+                    android:title="@string/russia_region" />
+                <item
+                    android:id="@+id/region_jerman"
+                    android:icon="@drawable/ic_region"
+                    android:title="@string/german_region" />
             </group>
-
-
-            <item
-                android:id="@+id/action_change_settings"
-                android:icon="@drawable/ic_lang"
-                android:title="@string/change_language_settings">
-            </item>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/share" />
-
         </menu>
     </item>
+
+    <item
+        android:id="@+id/nav_fav"
+        android:icon="@drawable/ic_star_black_24dp"
+        android:title="@string/favorite" />
+    <item
+        android:id="@+id/action_change_settings"
+        android:icon="@drawable/ic_lang"
+        android:title="@string/change_language_settings" />
+    <item
+        android:id="@+id/nav_share"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/share" />
 
 </menu>

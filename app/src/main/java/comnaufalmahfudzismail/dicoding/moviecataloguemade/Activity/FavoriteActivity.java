@@ -48,7 +48,7 @@ public class FavoriteActivity extends AppCompatActivity
 		setContentView(R.layout.activity_favorite);
 		ButterKnife.bind(this);
 
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setSupportActionBar(toolbar);
 
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
