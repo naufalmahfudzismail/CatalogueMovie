@@ -4,7 +4,7 @@
  * Last modified 9/27/17 9:25 AM.
  */
 
-package comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie;
+package comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.DetailMovie;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,8 +14,6 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 
 public class DetailMovie implements Parcelable, Serializable
 {

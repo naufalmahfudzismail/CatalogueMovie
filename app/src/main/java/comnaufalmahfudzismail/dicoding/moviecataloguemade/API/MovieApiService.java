@@ -1,11 +1,8 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.API;
 
-import org.intellij.lang.annotations.Language;
 
-
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
-import io.reactivex.Observable;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.DetailMovie.DetailMovie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.MovieResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

@@ -1,13 +1,9 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.NotificationCompatSideChannelService;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,26 +16,20 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.text.NumberFormat;
-import java.util.List;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiClient;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.DateTime;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.DetailMovie.DetailMovie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.FavoriteBuilder;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 import retrofit2.*;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder.*;
 import static comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder.MovieColumns.*;

@@ -1,13 +1,7 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Fragment;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.Loader;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -15,40 +9,22 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.mancj.materialsearchbar.MaterialSearchBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiClient;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieApiService;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.API.MovieAsyncTask;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.MainActivity;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.FragmentAdapter;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesAdapter;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesNowPlayAdapter;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie.DetailMovie;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Region;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.Movie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.MovieResponse;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.Region;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FragmentNowPlay extends Fragment implements
 		View.OnClickListener,

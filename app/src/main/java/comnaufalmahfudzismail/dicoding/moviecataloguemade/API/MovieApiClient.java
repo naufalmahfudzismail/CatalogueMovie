@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import java.io.IOException;
 
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Region;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;

@@ -4,26 +4,30 @@
     package="comnaufalmahfudzismail.dicoding.moviecataloguemade">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <permission
         android:name="comnaufalmahfudzismail.dicoding.moviecataloguemade.READ_DATABASE"
-        android:protectionLevel="normal"
-        />
+        android:protectionLevel="normal" />
     <permission
         android:name="comnaufalmahfudzismail.dicoding.moviecataloguemade.WRITE_DATABASE"
-        android:protectionLevel="normal"
-        />
-
+        android:protectionLevel="normal" />
     <application
-
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.MainActivity">
+        <activity
+            android:name=".Activity.MainActivity"
+            tools:ignore="InnerclassSeparator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,7 +39,8 @@
                 android:value=".Activity.MainActivity" />
         </activity>
         <activity
-            android:name=".Activity.FavoriteActivity">
+            android:name=".Activity.FavoriteActivity"
+            tools:ignore="InnerclassSeparator">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.MainActivity" />
@@ -46,10 +51,25 @@
             android:authorities="comnaufalmahfudzismail.dicoding.moviecataloguemade"
             android:exported="true"
             android:readPermission="comnaufalmahfudzismail.dicoding.moviecataloguemade.READ_DATABASE"
-            android:writePermission="comnaufalmahfudzismail.dicoding.moviecataloguemade.WRITE_DATABASE" />
+            android:writePermission="comnaufalmahfudzismail.dicoding.moviecataloguemade.WRITE_DATABASE"
+            tools:ignore="InnerclassSeparator" />
+
+        <receiver android:name=".Widget.FavoriteWidget"
+            tools:ignore="InnerclassSeparator">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_widget_info" />
+        </receiver>
+
+        <service
+            android:name=".Widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            tools:ignore="InnerclassSeparator" />
 
     </application>
-
-
 
 </manifest>

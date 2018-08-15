@@ -4,7 +4,7 @@
  * Last modified 9/27/17 9:25 AM.
  */
 
-package comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.DetailMovie;
+package comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.DetailMovie;
 
 import com.google.gson.annotations.SerializedName;
 

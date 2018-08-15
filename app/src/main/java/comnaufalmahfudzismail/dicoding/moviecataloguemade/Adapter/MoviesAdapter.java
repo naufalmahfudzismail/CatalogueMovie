@@ -1,16 +1,13 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>

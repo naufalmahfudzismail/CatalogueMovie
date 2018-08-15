@@ -1,4 +1,4 @@
-package comnaufalmahfudzismail.dicoding.moviecataloguemade.Class;
+package comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,8 +7,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
 
 public class MovieResponse implements Parcelable
 {

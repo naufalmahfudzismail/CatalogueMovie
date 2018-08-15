@@ -1,28 +1,18 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.support.design.widget.TabLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-
-import com.google.gson.Gson;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Adapter.MoviesFavoriteAdapter;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Database.MovieContractBuilder;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 

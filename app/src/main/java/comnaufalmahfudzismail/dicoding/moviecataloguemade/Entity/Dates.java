@@ -1,4 +1,4 @@
-package comnaufalmahfudzismail.dicoding.moviecataloguemade.Class;
+package comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity;
 
 import com.google.gson.annotations.SerializedName;
 

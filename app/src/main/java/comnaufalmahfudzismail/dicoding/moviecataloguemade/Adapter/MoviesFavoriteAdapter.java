@@ -17,13 +17,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity.DetailActivity;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.Movie;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 
 public class MoviesFavoriteAdapter extends RecyclerView.Adapter<MoviesFavoriteAdapter.FavoriteMovieHolder>

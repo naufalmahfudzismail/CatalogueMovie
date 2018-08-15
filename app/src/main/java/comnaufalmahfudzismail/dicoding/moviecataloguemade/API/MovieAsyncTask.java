@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.BuildConfig;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.Movie;
-import comnaufalmahfudzismail.dicoding.moviecataloguemade.Class.MovieResponse;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.Movie;
+import comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity.MovieResponse;
 import comnaufalmahfudzismail.dicoding.moviecataloguemade.R;
 import cz.msebera.android.httpclient.Header;
 

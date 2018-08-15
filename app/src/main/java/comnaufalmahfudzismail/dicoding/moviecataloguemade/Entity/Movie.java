@@ -1,4 +1,4 @@
-package comnaufalmahfudzismail.dicoding.moviecataloguemade.Class;
+package comnaufalmahfudzismail.dicoding.moviecataloguemade.Entity;
 
 import android.database.Cursor;
 import android.os.Parcel;

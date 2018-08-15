@@ -46,6 +46,7 @@
     <string name="fontBlackItalic" translatable="false">fonts/Gotham_MediumItalic.otf</string>
     <string name="fontExtraBold" translatable="false">fonts/GothamBlack.otf</string>
     <string name="fontThin" translatable="false">fonts/Gotham_Thin.otf</string>
+    <!--FONT FINISH-->
     <string name="change_language_settings">Change Language Settings</string>
     <string name="share_description">Use FlashMovie to know more information abaout all movies around the world!</string>
     <string name="total_movie">Total :</string>
@@ -59,6 +60,10 @@
     <string name="japan_region">Japan</string>
     <string name="russia_region">Russia</string>
     <string name="german_region">German</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
+    <string name="empty_widget_view_text">No Movies Added</string>
+    <string name="widget_list">Your Favorite Movies List</string>
 
-    <!--FONT FINISH-->
+
 </resources>

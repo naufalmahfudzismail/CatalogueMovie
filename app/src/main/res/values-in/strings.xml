@@ -43,4 +43,7 @@
     <string name="japan_region">Jepang</string>
     <string name="russia_region">Rusia</string>
     <string name="german_region">Jerman</string>
+    <string name="empty_widget_view_text">Daftar film favorit masih kosong</string>
+    <string name="widget_list">Film Kesukaan Anda</string>
+
 </resources>
