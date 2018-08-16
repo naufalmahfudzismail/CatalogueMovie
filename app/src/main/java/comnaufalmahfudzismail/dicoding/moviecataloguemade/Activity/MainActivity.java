@@ -1,6 +1,7 @@
 package comnaufalmahfudzismail.dicoding.moviecataloguemade.Activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.os.Bundle;
 import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.text.style.TextAppearanceSpan;
 import android.view.Gravity;
 import android.view.Menu;
@@ -84,14 +86,30 @@ public class MainActivity extends AppCompatActivity implements
 	}
 
 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
+		getMenuInflater().inflate(R.menu.menu, menu);
+
+		MenuItem item = menu.findItem(R.id.setting);
+		SpannableString s = new SpannableString(item.getTitle());
+		s.setSpan(new ForegroundColorSpan(Color.BLACK), 0, s.length(), 0);
+		item.setTitle(s);
+
 		return true;
 	}
 
-
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		int id  = item.getItemId();
+		if(id == R.id.setting)
+		{
+			Intent intent = new Intent(this, SettingActivity.class);
+			startActivity(intent);
+		}
+		return super.onOptionsItemSelected(item);
+	}
 
 	@Override
 	public void onBackPressed()

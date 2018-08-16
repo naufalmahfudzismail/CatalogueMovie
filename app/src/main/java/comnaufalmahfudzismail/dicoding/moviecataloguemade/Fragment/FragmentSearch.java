@@ -219,7 +219,7 @@ public class FragmentSearch extends Fragment implements
 
 				if (PastVisible + NowVisible >= total && totalMovies <= 99)
 				{
-					if (currentPage < totalPages && currentPage <= 5)
+					if (currentPage < totalPages)
 					{
 						currentPage++;
 						StartRefresh();

@@ -1,5 +1,5 @@
 <resources  xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Katalog Film</string>
+    <string name="app_name">Flash Movies</string>
     <string name="read_more">Baca Selengkapnya</string>
     <string name="title">Judul</string>
     <string name="tanggal_rilis">Tanggal rilis</string>
@@ -33,7 +33,6 @@
     <string name="nav_header_title">FlashMovie</string>
     <string name="nav_header_subtitle">naufalmahfudzismail@gmail.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="toast_nav_home">Kamu sudah Berada di Beranda :v</string>
     <string name="change_language_settings">Ganti Bahasa</string>
     <string name="share_description">Gunakan Aplikasi FlashMovie untuk mencari infromasi segalanya tentang dunia perfilman!</string>
     <string name="total_movie">Total :</string>

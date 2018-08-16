@@ -6,12 +6,14 @@
         <item name="colorPrimary">#e1bb7b</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/putih</item>
+        <item name="android:windowBackground">@color/AbuMuda</item>
         <item name="android:colorBackground">@color/putih</item>
         <item name="android:textColorPrimary">@color/putih</item>
+        <item name="actionMenuTextColor">@color/hitam</item>
     </style>
 
     <style name="ToolbarTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="actionMenuTextColor">@color/hitam</item>
         <item name="android:textColorPrimary">@color/putih</item>
         <item name="android:textColorSecondary">@color/Abu</item>
         <item name="android:textColor">@color/putih</item>

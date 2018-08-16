@@ -11,5 +11,4 @@ public class StackWidgetService extends RemoteViewsService
 		return new StackRemoteViewsFactory(this.getApplicationContext(), intent);
 	}
 
-
 }
