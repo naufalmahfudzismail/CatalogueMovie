@@ -29,7 +29,7 @@ public class FavoriteWidget extends AppWidgetProvider
 		views.setRemoteAdapter( R.id.stack_view, intent);
 		views.setEmptyView(R.id.stack_view, R.id.empty_view);
 
-		// Instruct the widget manager to update the widget
+
 		appWidgetManager.updateAppWidget(appWidgetId, views);
 	}
 

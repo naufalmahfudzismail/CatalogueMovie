@@ -78,7 +78,7 @@
     <string name="label_setting_locale_summary">Setting Locale</string>
     <string name="label_setting_locale_title">Change your phone localization</string>
     <string name="action_settings">Settings</string>
-    <string name="upcoming_reminder_msg" >Hi, today %s is release  </string>
+    <string name="upcoming_reminder_msg" >Assalamualaikum, today %s is release  </string>
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

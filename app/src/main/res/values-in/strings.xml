@@ -45,4 +45,17 @@
     <string name="empty_widget_view_text">Daftar film favorit masih kosong</string>
     <string name="widget_list">Film Kesukaan Anda</string>
 
+    <string name="action_notification">Pemeberitahuan</string>
+    <string name="key_reminder_daily">key_daily_reminder</string>
+    <string name="label_daily_reminder_summary">Nyalakan on/off pengingat harian</string>
+    <string name="label_daily_reminder_title">Pengingat Harian</string>
+    <string name="label_upcoming_reminder_title">Pengingat Rilis Film Baru</string>
+    <string name="key_reminder_upcoming">key_upcoming_reminder</string>
+    <string name="label_upcoming_reminder_summary">Nyalan on/off Pengingat rilis film</string>
+    <string name="key_setting_locale">key_setting_locale</string>
+    <string name="label_setting_locale_summary">Pengaturan lokal</string>
+    <string name="label_setting_locale_title">Ganti bahasamu</string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="upcoming_reminder_msg" >Assalamualaikum, hari ini %s sudah rilis </string>
+
 </resources>

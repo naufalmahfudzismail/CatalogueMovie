@@ -102,7 +102,7 @@ public class UpcomingAlarmReceiver extends BroadcastReceiver
 			PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			Calendar calendar = Calendar.getInstance();
-			calendar.set(Calendar.HOUR_OF_DAY, 7);
+			calendar.set(Calendar.HOUR_OF_DAY, 6);
 			calendar.set(Calendar.MINUTE, 0);
 			calendar.set(Calendar.SECOND, 0);
 
